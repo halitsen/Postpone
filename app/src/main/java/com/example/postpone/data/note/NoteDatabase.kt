@@ -1,4 +1,4 @@
-package com.example.postpone.data
+package com.example.postpone.data.note
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

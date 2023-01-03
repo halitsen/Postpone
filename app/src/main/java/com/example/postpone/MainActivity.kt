@@ -1,11 +1,9 @@
 package com.example.postpone
 
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -19,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import com.example.postpone.model.Note
+import com.example.postpone.model.Todo
 import com.example.postpone.screen.NoteScreen
 import com.example.postpone.screen.TodoScreen
 import com.example.postpone.ui.theme.PostponeTheme
@@ -40,7 +39,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     color = MaterialTheme.colors.background
                 ) {
-                    val noteViewModel : MainViewModel by viewModels()
+                    val noteViewModel: MainViewModel by viewModels()
                     NotesApp(noteViewModel)
                 }
             }
@@ -49,12 +48,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun NotesApp(noteViewModel: MainViewModel) {
-    val notes = noteViewModel.noteList.collectAsState().value
+fun NotesApp(mainViewModel: MainViewModel) {
+    val notes = mainViewModel.noteList.collectAsState().value
+    val todos = mainViewModel.todoList.collectAsState().value
     MainScreen(
         notes = notes,
-        onAddNote = { noteViewModel.addNote(it) },
-        onRemoveNote = {  }
+        todos = todos,
+        onAddNote = { mainViewModel.addNote(it) },
+        onAddTodo = { mainViewModel.addTodo(it) },
+        onRemoveNote = { }
     )
 }
 
@@ -63,7 +65,9 @@ fun NotesApp(noteViewModel: MainViewModel) {
 @Composable
 fun MainScreen(
     notes: List<Note>,
+    todos: List<Todo>,
     onAddNote: (Note) -> Unit,
+    onAddTodo: (Todo) -> Unit,
     onRemoveNote: (Note) -> Unit
 ) {
     val tabs = listOf(TabItem.Note, TabItem.Todo)
@@ -73,7 +77,9 @@ fun MainScreen(
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 val note = Note(noteTitle = "First note", description = "Hello this is first note")
-                onAddNote.invoke(note)
+                //onAddNote.invoke(note)
+                val todo = Todo(description = "Hello this is first todo")
+                onAddTodo.invoke(todo)
             }) {
                 Text(text = "Add")
             }
@@ -81,7 +87,7 @@ fun MainScreen(
     ) { padding ->
         Column(modifier = Modifier.padding(padding)) {
             Tabs(tabs = tabs, pagerState = pagerState)
-            TabsContent(tabs = tabs, pagerState = pagerState, notes = notes)
+            TabsContent(tabs = tabs, pagerState = pagerState, notes = notes, todos = todos)
         }
     }
 }
@@ -122,16 +128,17 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
         }
     }
 }
+
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun TabsContent(tabs: List<TabItem>, pagerState: PagerState, notes: List<Note>) {
+fun TabsContent(tabs: List<TabItem>, pagerState: PagerState, notes: List<Note>, todos: List<Todo>) {
     HorizontalPager(state = pagerState, count = tabs.size, userScrollEnabled = false) { page ->
         when (page) {
             0 -> {
                 NoteScreen(notes)
             }
             1 -> {
-                TodoScreen()
+                TodoScreen(todos)
             }
         }
     }

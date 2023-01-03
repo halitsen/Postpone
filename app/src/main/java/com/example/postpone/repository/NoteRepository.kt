@@ -1,6 +1,6 @@
 package com.example.postpone.repository
 
-import com.example.postpone.data.NoteDatabaseDao
+import com.example.postpone.data.note.NoteDatabaseDao
 import com.example.postpone.model.Note
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
