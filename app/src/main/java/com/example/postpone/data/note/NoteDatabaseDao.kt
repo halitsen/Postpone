@@ -1,4 +1,4 @@
-package com.example.postpone.data
+package com.example.postpone.data.note
 
 import androidx.room.Dao
 import androidx.room.Delete
