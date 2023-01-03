@@ -1,14 +1,13 @@
 package com.example.postpone.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -22,11 +21,10 @@ import com.example.postpone.model.Note
 
 @Composable
 fun NoteScreen(notes: List<Note>) {
-    LazyColumn {
+    LazyColumn(modifier = Modifier.background(color = Color.White)) {
         items(notes) { item ->
             NoteRow(note = item, onNoteClicked = {
             })
-            Divider(modifier = Modifier.height(6.dp))
         }
     }
 }
@@ -40,10 +38,12 @@ fun NoteRow(
 
     Surface(
         modifier = modifier
+            .padding(top = 6.dp, bottom = 6.dp, start = 6.dp, end = 6.dp)
             .clip(
                 shape = RoundedCornerShape(
-                    topEnd = 36.dp,
-                    bottomStart = 36.dp
+                    topEnd = 16.dp,
+                    bottomStart = 16.dp,
+                    bottomEnd = 16.dp
                 )
             )
             .fillMaxWidth(),

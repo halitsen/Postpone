@@ -125,7 +125,7 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun TabsContent(tabs: List<TabItem>, pagerState: PagerState, notes: List<Note>) {
-    HorizontalPager(state = pagerState, count = tabs.size) { page ->
+    HorizontalPager(state = pagerState, count = tabs.size, userScrollEnabled = false) { page ->
         when (page) {
             0 -> {
                 NoteScreen(notes)
