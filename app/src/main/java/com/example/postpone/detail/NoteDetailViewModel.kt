@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.postpone.model.Note
 import com.example.postpone.repository.NoteRepository
+import com.example.postpone.utils.getDateFromTimeStamp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,8 +21,15 @@ class NoteDetailViewModel @Inject constructor(
     private val _note = MutableStateFlow<Note?>(null)
     val note = _note.asStateFlow()
 
+    private val _date = MutableStateFlow("")
+    val date = _date.asStateFlow()
+
+    private val description = MutableStateFlow("")
+
+
     init {
         getNote()
+        _date.value = getDateFromTimeStamp(if(_note.value == null) System.currentTimeMillis() else _note.value!!.noteLastEdit)
     }
 
     private fun getNote() {
@@ -34,8 +42,27 @@ class NoteDetailViewModel @Inject constructor(
         }
     }
 
+    fun onTextChange(text: String) {
+        //todo save onBackPressed
+        /*
+        viewModelScope.launch {
+            description.value = text
+            if (_note.value == null) {
+                val note = Note(description = text)
+                noteRepository.addNote(note)
+                _note.value = note
+            } else {
+                _note.value?.description = description.value
+                note.value?.let { noteRepository.addNote(it) }
+            }
+        }
+
+         */
+    }
+
     fun saveNote(note: Note) {
         viewModelScope.launch {
+            _note.value?.description = description.value
             noteRepository.addNote(note)
         }
     }
@@ -44,14 +71,12 @@ class NoteDetailViewModel @Inject constructor(
         viewModelScope.launch {
             noteRepository.deleteNote(note)
         }
-
     }
 
     fun updateNote(note: Note) {
         viewModelScope.launch {
             noteRepository.updateNote(note)
         }
-
     }
 
 

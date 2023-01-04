@@ -11,7 +11,7 @@ data class Note constructor(
     @ColumnInfo(name = "note_title")
     var noteTitle: String = "",
     @ColumnInfo(name = "note_description")
-    val description: String="",
+    var description: String="",
     @ColumnInfo(name = "note_last_edit")
     var noteLastEdit: Long = System.currentTimeMillis()
 )

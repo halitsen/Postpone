@@ -25,7 +25,9 @@ fun PostponeNavHost(
             route = NoteDetail.routeWithArgs,
             arguments = NoteDetail.arguments
         ) {
-            NoteDetailRoute()
+            NoteDetailRoute(onBackPressed = {
+                navController.navigateUp()
+            })
         }
     }
 }
