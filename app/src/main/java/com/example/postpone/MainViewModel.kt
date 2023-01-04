@@ -51,12 +51,6 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun addNote(note: Note) {
-        viewModelScope.launch {
-            noteRepository.addNote(note)
-        }
-    }
-
     fun addTodo(todo: Todo){
         viewModelScope.launch {
             todoRepository.addTodo(todo)
