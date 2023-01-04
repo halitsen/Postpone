@@ -5,12 +5,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun NoteDetailRoute(viewModel: NoteDetailViewModel = hiltViewModel()) {
+fun NoteDetailRoute(onBackPressed: () -> Unit, viewModel: NoteDetailViewModel = hiltViewModel()) {
     val note = viewModel.note.collectAsState().value
+    val date = viewModel.date.collectAsState().value
     NoteDetailScreen(
         note = note,
-        onSaveNote = {viewModel.saveNote(it)},
-        onDeleteNote = {},
-        onUpdateNote = {}
+        date = date,
+        onSaveNote = { viewModel.saveNote(it) },
+        onDeleteNote = { note?.let { viewModel.deleteNote(it) } },
+        onUpdateNote = {},
+        onBackPressed = onBackPressed,
+        onTextChange = {viewModel.onTextChange(it)}
     )
 }
