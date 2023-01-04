@@ -7,6 +7,8 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -81,7 +83,7 @@ fun MainScreen(
                 val todo = Todo(description = "Hello this is first todo")
                 onAddTodo.invoke(todo)
             }) {
-                Text(text = "Add")
+                Icon(Icons.Filled.Add,"")
             }
         }
     ) { padding ->
@@ -96,7 +98,7 @@ fun MainScreen(
 fun TopBar() {
     TopAppBar(
         title = { Text(text = stringResource(R.string.app_name), fontSize = 18.sp) },
-        backgroundColor = colorResource(id = R.color.purple_200),
+        backgroundColor = MaterialTheme.colors.surface,
         contentColor = Color.White
     )
 }
@@ -107,7 +109,7 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
     val scope = rememberCoroutineScope()
     TabRow(
         selectedTabIndex = pagerState.currentPage,
-        backgroundColor = colorResource(id = R.color.purple_700),
+        backgroundColor = MaterialTheme.colors.surface,
         contentColor = Color.White,
         indicator = { tabPositions ->
             TabRowDefaults.Indicator(

@@ -28,7 +28,6 @@ fun TodoScreen(notes: List<Todo>) {
     }
 }
 
-
 @Composable
 fun TodoRow(
     modifier: Modifier = Modifier,
