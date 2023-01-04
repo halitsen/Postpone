@@ -2,7 +2,10 @@ package com.example.postpone.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val DarkSurface = Color(0xFF242b3b)
+val DarkOnSurface = Color(0xFF2E394B)
+val LightOnSurface = Color(0xFFFFFFFF)
+val DarkTextColor = Color(0xFFFFFFFF)
+val LightTextColor = Color(0xFF242b3b)
+
+
