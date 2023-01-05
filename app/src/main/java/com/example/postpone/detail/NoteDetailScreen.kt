@@ -1,6 +1,7 @@
 package com.example.postpone.detail
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -35,8 +36,7 @@ fun NoteDetailScreen(
     onDeleteNoteClicked: (Note?) -> Unit,
     onUpdateNote: (Note) -> Unit,
     onBackPressed: () -> Unit,
-    onTextChange: (String) -> Unit,
-    shouldOpenDeleteDialog: Boolean
+    onTextChange: (String) -> Unit
 ) {
     PostponeTheme {
         Surface(
@@ -48,7 +48,7 @@ fun NoteDetailScreen(
             var text by rememberSaveable { mutableStateOf(noteDescription) }
             val openDialog = remember { mutableStateOf(false) }
             if (openDialog.value) {
-                ShowAlertDialog(onDismiss = {openDialog.value = false}, onConfirm = {
+                ShowAlertDialog(onDismiss = { openDialog.value = false }, onConfirm = {
                     openDialog.value = false
                     onDeleteNoteClicked(note)
                     onBackPressed()
@@ -73,7 +73,7 @@ fun NoteDetailScreen(
                     Text(
                         text = date,
                         modifier = Modifier.padding(start = 14.dp, top = 16.dp),
-                        color = MaterialTheme.colors.secondaryVariant
+                        color = MaterialTheme.colors.secondary
                     )
                     Spacer(modifier = Modifier.background(color = Color.Transparent))
                     OutlinedTextField(
@@ -82,20 +82,19 @@ fun NoteDetailScreen(
                             text = it
                             onTextChange(it)
                         },
-                        modifier = Modifier
-                            .background(color = Color.White)
-                            .fillMaxHeight()
-                            .fillMaxWidth(),
                         textStyle = TextStyle(
                             fontSize = 18.sp,
-                            color = MaterialTheme.colors.surface
+                            color = MaterialTheme.colors.secondary
                         ),
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .fillMaxWidth(),
                         singleLine = false,
                         enabled = true,
                         colors = TextFieldDefaults.textFieldColors(
-                            textColor = MaterialTheme.colors.surface,
+                            textColor = MaterialTheme.colors.secondary,
                             disabledTextColor = MaterialTheme.colors.surface,
-                            backgroundColor = Color.White,
+                            backgroundColor = MaterialTheme.colors.background,
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
                             disabledIndicatorColor = Color.Transparent
@@ -104,11 +103,28 @@ fun NoteDetailScreen(
                             Text("Note It")
                         }
                     )
-
                 }
-
             }
         }
+    }
+}
+
+@Composable
+fun OutlinedTextFieldBackground(
+    color: Color,
+    content: @Composable () -> Unit
+) {
+    Box {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(top = 8.dp)
+                .background(
+                    color,
+                )
+        )
+        content()
     }
 }
 
