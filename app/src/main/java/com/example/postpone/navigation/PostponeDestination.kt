@@ -16,9 +16,13 @@ object NoteDetail : PostponeDestination {
     override val route: String
         get() = "detail"
     private const val idArg = "id"
-    val routeWithArgs = "$route/{$idArg}"
+    private const val descriptionArg = "description"
+    val routeWithArgs = "$route/{$idArg}/{$descriptionArg}"
     val arguments = listOf(
         navArgument(idArg) {
+            type = NavType.StringType
+        },
+        navArgument(descriptionArg){
             type = NavType.StringType
         }
     )
