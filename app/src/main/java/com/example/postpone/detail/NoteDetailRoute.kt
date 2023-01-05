@@ -9,7 +9,6 @@ fun NoteDetailRoute(onBackPressed: () -> Unit, viewModel: NoteDetailViewModel = 
     val note = viewModel.note.collectAsState().value
     val date = viewModel.date.collectAsState().value
     val description = viewModel.description.collectAsState().value?:""
-    val shouldOpenDeleteDialog = viewModel.shouldOpenDialog.collectAsState().value
     NoteDetailScreen(
         note = note,
         date = date,
@@ -19,6 +18,5 @@ fun NoteDetailRoute(onBackPressed: () -> Unit, viewModel: NoteDetailViewModel = 
         onUpdateNote = {},
         onBackPressed = onBackPressed,
         onTextChange = {viewModel.onTextChange(it)},
-        shouldOpenDeleteDialog = shouldOpenDeleteDialog
     )
 }

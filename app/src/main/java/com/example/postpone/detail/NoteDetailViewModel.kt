@@ -21,13 +21,10 @@ class NoteDetailViewModel @Inject constructor(
     private val _note = MutableStateFlow<Note?>(null)
     val note = _note.asStateFlow()
 
-     val description = MutableStateFlow(savedStateHandle.get<String>("description")).asStateFlow()
+    val description = MutableStateFlow(savedStateHandle.get<String>("description")).asStateFlow()
 
     private val _date = MutableStateFlow("")
     val date = _date.asStateFlow()
-
-    private val _shouldOpenDialog = MutableStateFlow(false)
-    val shouldOpenDialog = _shouldOpenDialog.asStateFlow()
 
     init {
         getNote()
@@ -64,6 +61,7 @@ class NoteDetailViewModel @Inject constructor(
 
     fun saveNote(note: Note) {
         viewModelScope.launch {
+            if (note.description.isNullOrEmpty().not() && note.description != "")
                 noteRepository.addNote(note)
         }
     }
