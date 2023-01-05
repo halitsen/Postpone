@@ -8,13 +8,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun NoteDetailRoute(onBackPressed: () -> Unit, viewModel: NoteDetailViewModel = hiltViewModel()) {
     val note = viewModel.note.collectAsState().value
     val date = viewModel.date.collectAsState().value
+    val description = viewModel.description.collectAsState().value?:""
+    val shouldOpenDeleteDialog = viewModel.shouldOpenDialog.collectAsState().value
     NoteDetailScreen(
         note = note,
         date = date,
+        description,
         onSaveNote = { viewModel.saveNote(it) },
-        onDeleteNote = { note?.let { viewModel.deleteNote(it) } },
+        onDeleteNoteClicked = { note?.let { viewModel.onDeleteNoteClicked(it) } },
         onUpdateNote = {},
         onBackPressed = onBackPressed,
-        onTextChange = {viewModel.onTextChange(it)}
+        onTextChange = {viewModel.onTextChange(it)},
+        shouldOpenDeleteDialog = shouldOpenDeleteDialog
     )
 }

@@ -15,6 +15,7 @@ import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -29,11 +30,13 @@ import com.example.postpone.ui.theme.PostponeTheme
 fun NoteDetailScreen(
     note: Note?,
     date: String,
+    noteDescription: String,
     onSaveNote: (Note) -> Unit,
-    onDeleteNote: () -> Unit,
+    onDeleteNoteClicked: (Note?) -> Unit,
     onUpdateNote: (Note) -> Unit,
     onBackPressed: () -> Unit,
-    onTextChange: (String) -> Unit
+    onTextChange: (String) -> Unit,
+    shouldOpenDeleteDialog: Boolean
 ) {
     PostponeTheme {
         Surface(
@@ -42,12 +45,25 @@ fun NoteDetailScreen(
                 .fillMaxWidth()
                 .fillMaxHeight()
         ) {
-            var text by rememberSaveable { mutableStateOf(note?.description ?: "") }
+            var text by rememberSaveable { mutableStateOf(noteDescription) }
+            val openDialog = remember { mutableStateOf(false) }
+            if (openDialog.value) {
+                ShowAlertDialog(onDismiss = {openDialog.value = false}, onConfirm = {
+                    openDialog.value = false
+                    onDeleteNoteClicked(note)
+                    onBackPressed()
+                })
+            }
             Scaffold(
-                topBar = { DetailTopBar(onBackPressed, onDeleteNote) },
+                topBar = {
+                    DetailTopBar(onBackPressed) {
+                        openDialog.value = true
+                    }
+                },
                 floatingActionButton = {
                     FloatingActionButton(onClick = {
                         onSaveNote.invoke(Note(description = text))
+                        onBackPressed()
                     }) {
                         Icon(Icons.Filled.Check, "")
                     }
@@ -97,7 +113,7 @@ fun NoteDetailScreen(
 }
 
 @Composable
-fun DetailTopBar(onBackPressed: () -> Unit, onDeleteNote: () -> Unit) {
+fun DetailTopBar(onBackPressed: () -> Unit, onDeleteNoteClicked: () -> Unit) {
     TopAppBar(
         title = { Text(text = "Postpone", fontSize = 18.sp) },
         backgroundColor = MaterialTheme.colors.surface,
@@ -108,7 +124,7 @@ fun DetailTopBar(onBackPressed: () -> Unit, onDeleteNote: () -> Unit) {
             }
         },
         actions = {
-            IconButton(onClick = { onDeleteNote() }) {
+            IconButton(onClick = { onDeleteNoteClicked() }) {
                 Icon(Icons.Outlined.Delete, "", tint = Color.White)
             }
         }
