@@ -31,7 +31,7 @@ import com.example.postpone.ui.theme.PostponeTheme
 fun NoteDetailScreen(
     note: Note?,
     date: String,
-    noteDescription: String,
+    noteDescription: String?,
     onSaveNote: (Note) -> Unit,
     onDeleteNoteClicked: (Note?) -> Unit,
     onUpdateNote: (Note) -> Unit,
@@ -45,7 +45,7 @@ fun NoteDetailScreen(
                 .fillMaxWidth()
                 .fillMaxHeight()
         ) {
-            var text by rememberSaveable { mutableStateOf(noteDescription) }
+            var text by rememberSaveable { mutableStateOf(noteDescription?.trim()?:"") }
             val openDialog = remember { mutableStateOf(false) }
             if (openDialog.value) {
                 ShowAlertDialog(onDismiss = { openDialog.value = false }, onConfirm = {

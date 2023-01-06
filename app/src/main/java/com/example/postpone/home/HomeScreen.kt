@@ -44,7 +44,7 @@ fun HomeScreen(
         topBar = { TopBar() },
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                val note = Note(noteTitle = "First note", description = "Hello this is first note")
+                val note = Note(noteTitle = " ", description = " ")
 
                 val todo = Todo(description = "Hello this is first todo")
                 onNoteClicked.invoke(note)
