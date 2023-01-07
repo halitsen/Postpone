@@ -35,8 +35,7 @@ fun NoteDetailScreen(
     onSaveNote: (Note) -> Unit,
     onDeleteNoteClicked: (Note?) -> Unit,
     onUpdateNote: (Note) -> Unit,
-    onBackPressed: () -> Unit,
-    onTextChange: (String) -> Unit
+    onBackPressed: () -> Unit
 ) {
     PostponeTheme {
         Surface(
@@ -80,7 +79,6 @@ fun NoteDetailScreen(
                         value = text,
                         onValueChange = {
                             text = it
-                            onTextChange(it)
                         },
                         textStyle = TextStyle(
                             fontSize = 18.sp,
@@ -106,25 +104,6 @@ fun NoteDetailScreen(
                 }
             }
         }
-    }
-}
-
-@Composable
-fun OutlinedTextFieldBackground(
-    color: Color,
-    content: @Composable () -> Unit
-) {
-    Box {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .padding(top = 8.dp)
-                .background(
-                    color,
-                )
-        )
-        content()
     }
 }
 

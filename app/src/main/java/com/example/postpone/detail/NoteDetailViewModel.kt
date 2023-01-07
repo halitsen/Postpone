@@ -21,7 +21,7 @@ class NoteDetailViewModel @Inject constructor(
     private val _note = MutableStateFlow<Note?>(null)
     val note = _note.asStateFlow()
 
-    val description = MutableStateFlow(savedStateHandle["description"] ?:"").asStateFlow()
+    val description = MutableStateFlow(savedStateHandle["description"] ?: "").asStateFlow()
 
     private val _date = MutableStateFlow("")
     val date = _date.asStateFlow()
@@ -42,27 +42,16 @@ class NoteDetailViewModel @Inject constructor(
         }
     }
 
-    fun onTextChange(text: String) {
-        //todo save onBackPressed
-        /*
-        viewModelScope.launch {
-            description.value = text
-            if (_note.value == null) {
-                val note = Note(description = text)
-                noteRepository.addNote(note)
-                _note.value = note
-            } else {
-                _note.value?.description = description.value
-                note.value?.let { noteRepository.addNote(it) }
-            }
-        }
-         */
-    }
-
     fun saveNote(note: Note) {
         viewModelScope.launch {
-            if (note.description.trim().isEmpty().not() && note.description != "")
-                noteRepository.addNote(note)
+            if (description.value.trim() == "") {
+                if (note.description.trim().isEmpty().not() && note.description != "")
+                    noteRepository.addNote(note)
+            } else {
+                if (note.description.trim().isEmpty().not() && note.description != "")
+                    _note.value?.description = note.description
+                    noteRepository.updateNote(_note.value?:note)
+            }
         }
     }
 
@@ -77,6 +66,4 @@ class NoteDetailViewModel @Inject constructor(
             noteRepository.updateNote(note)
         }
     }
-
-
 }
