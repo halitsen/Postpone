@@ -15,8 +15,7 @@ fun NoteDetailRoute(onBackPressed: () -> Unit, viewModel: NoteDetailViewModel = 
         description,
         onSaveNote = { viewModel.saveNote(it) },
         onDeleteNoteClicked = { note?.let { viewModel.onDeleteNoteClicked(it) } },
-        onUpdateNote = {},
-        onBackPressed = onBackPressed,
-        onTextChange = {viewModel.onTextChange(it)},
+        onUpdateNote = {viewModel.updateNote(it)},
+        onBackPressed = onBackPressed
     )
 }
