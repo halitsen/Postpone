@@ -14,6 +14,8 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,14 +42,24 @@ fun HomeScreen(
 ) {
     val tabs = listOf(TabItem.Note, TabItem.Todo)
     val pagerState = rememberPagerState()
+    val openDialog = remember { mutableStateOf(false) }
+
+    if (openDialog.value) {
+        TodoAddDialog(onCancel = { openDialog.value = false }, onConfirm = {
+            onAddTodo(it)
+            openDialog.value = false
+        })
+    }
     Scaffold(
         topBar = { TopBar() },
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 val note = Note(noteTitle = " ", description = " ")
-
-                val todo = Todo(description = "Hello this is first todo")
-                onNoteClicked.invoke(note)
+                if (pagerState.currentPage == 0) {
+                    onNoteClicked.invoke(note)
+                } else {
+                    openDialog.value = true
+                }
             }) {
                 Icon(Icons.Filled.Add, "")
             }
@@ -70,7 +82,7 @@ fun HomeScreen(
 fun TopBar() {
     TopAppBar(
         title = { Text(text = "Postpone", fontSize = 18.sp) },
-        backgroundColor = MaterialTheme.colors.surface,
+        backgroundColor = MaterialTheme.colors.primary,
         contentColor = Color.White
     )
 }
@@ -81,7 +93,7 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
     val scope = rememberCoroutineScope()
     TabRow(
         selectedTabIndex = pagerState.currentPage,
-        backgroundColor = MaterialTheme.colors.surface,
+        backgroundColor = MaterialTheme.colors.primary,
         contentColor = Color.White,
         indicator = { tabPositions ->
             TabRowDefaults.Indicator(
