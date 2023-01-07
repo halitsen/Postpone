@@ -32,7 +32,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun getAllTodos(){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch{
             todoRepository.getAllTodos().distinctUntilChanged().collect {
                 if (it.isEmpty().not()) {
                     _todoList.value = it
@@ -42,7 +42,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun getAllNotes() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch{
             noteRepository.getAllNotes().distinctUntilChanged().collect {
                 if (it.isEmpty().not()) {
                     _noteList.value = it
@@ -57,13 +57,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun updateNote(note: Note) {
-        viewModelScope.launch {
-            noteRepository.updateNote(note)
-        }
-    }
-
-    fun removeNote(note: Note) {
+    fun deleteNote(note: Note) {
         viewModelScope.launch {
             noteRepository.deleteNote(note)
         }

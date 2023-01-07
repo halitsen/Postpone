@@ -18,6 +18,7 @@ fun HomeRoute(
         notes = notes,
         todos = todos,
         onAddTodo = { viewModel.addTodo(it) },
-        onNoteClicked = { onNoteClicked.invoke(it) }
+        onNoteClicked = { onNoteClicked.invoke(it) },
+        onNoteDeleteClicked = { viewModel.deleteNote(it) }
     )
 }
