@@ -1,5 +1,6 @@
 package com.example.postpone.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.FloatingActionButton
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -24,7 +26,6 @@ import androidx.compose.ui.unit.sp
 import com.example.postpone.TabItem
 import com.example.postpone.model.Note
 import com.example.postpone.model.Todo
-import com.example.postpone.screen.NoteScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
@@ -124,7 +125,7 @@ fun TabsContent(
     todos: List<Todo>,
     onNoteClicked: (Note) -> Unit
 ) {
-    HorizontalPager(state = pagerState, count = tabs.size, userScrollEnabled = false) { page ->
+    HorizontalPager(state = pagerState, count = tabs.size, userScrollEnabled = false, verticalAlignment = Alignment.Top, modifier = Modifier.background(MaterialTheme.colors.background)) { page ->
         when (page) {
             0 -> {
                 NoteScreen(notes, onNoteClicked = onNoteClicked)
