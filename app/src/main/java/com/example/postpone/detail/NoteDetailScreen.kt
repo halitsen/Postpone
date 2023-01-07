@@ -47,7 +47,7 @@ fun NoteDetailScreen(
             var text by rememberSaveable { mutableStateOf(noteDescription?.trim()?:"") }
             val openDialog = remember { mutableStateOf(false) }
             if (openDialog.value) {
-                ShowAlertDialog(onDismiss = { openDialog.value = false }, onConfirm = {
+                DeleteNoteAlertDialog(onCancel = { openDialog.value = false }, onConfirm = {
                     openDialog.value = false
                     onDeleteNoteClicked(note)
                     onBackPressed()
@@ -91,7 +91,8 @@ fun NoteDetailScreen(
                         enabled = true,
                         colors = TextFieldDefaults.textFieldColors(
                             textColor = MaterialTheme.colors.secondary,
-                            disabledTextColor = MaterialTheme.colors.surface,
+                            cursorColor = MaterialTheme.colors.secondary,
+                            disabledTextColor = MaterialTheme.colors.primary,
                             backgroundColor = MaterialTheme.colors.background,
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
@@ -111,7 +112,7 @@ fun NoteDetailScreen(
 fun DetailTopBar(onBackPressed: () -> Unit, onDeleteNoteClicked: () -> Unit) {
     TopAppBar(
         title = { Text(text = "Postpone", fontSize = 18.sp) },
-        backgroundColor = MaterialTheme.colors.surface,
+        backgroundColor = MaterialTheme.colors.primary,
         contentColor = Color.White,
         navigationIcon = {
             IconButton(onClick = { onBackPressed() }, modifier = Modifier.width(48.dp)) {

@@ -32,14 +32,14 @@ import androidx.compose.ui.window.Dialog
 
 @Preview
 @Composable
-fun ShowAlertDialog(
-    onDismiss: () -> Unit = {},
+fun DeleteNoteAlertDialog(
+    onCancel: () -> Unit = {},
     onConfirm: () -> Unit = {}
 ) {
     val context = LocalContext.current.applicationContext
     Dialog(
         onDismissRequest = {
-            onDismiss()
+            onCancel()
         }
     ) {
         Surface(
@@ -58,12 +58,12 @@ fun ShowAlertDialog(
                         alignment = Alignment.Start
                     )
                 ) {
-                    Icon(Icons.Filled.Delete, "", tint = Color.White)
+                    Icon(Icons.Filled.Delete, "", tint = MaterialTheme.colors.secondary)
 
                     Text(
                         text = "Delete Note",
                         style = TextStyle(
-                            color = Color.White,
+                            color = MaterialTheme.colors.secondary,
                             fontFamily = FontFamily.SansSerif,
                             fontSize = 18.sp
                         )
@@ -75,7 +75,7 @@ fun ShowAlertDialog(
                         .padding(top = 16.dp, bottom = 32.dp),
                     text = "Are you sure you want to delete this note?",
                     style = TextStyle(
-                        color = Color.White,
+                        color = MaterialTheme.colors.secondary,
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 14.sp,
                         lineHeight = 22.sp
@@ -92,11 +92,10 @@ fun ShowAlertDialog(
                     Box(
                         modifier = Modifier
                             .clickable {
-                                onDismiss()
+                                onCancel()
                             }
-                            .border(
-                                width = 1.dp,
-                                color = Color.White,
+                            .background(
+                                color = MaterialTheme.colors.primary,
                                 shape = RoundedCornerShape(6.dp)
                             )
                             .padding(top = 8.dp, bottom = 8.dp, start = 32.dp, end = 32.dp),
