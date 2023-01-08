@@ -11,5 +11,5 @@ data class Todo constructor(
     @ColumnInfo(name = "description")
     val description: String="",
     @ColumnInfo(name = "is_done")
-    val isDone: Boolean = false
+    var isDone: Boolean = false
 )

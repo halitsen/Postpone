@@ -98,6 +98,11 @@ fun DeleteNoteAlertDialog(
                                 color = MaterialTheme.colors.primary,
                                 shape = RoundedCornerShape(6.dp)
                             )
+                            .border(
+                                width = 1.dp,
+                                color = Color.White,
+                                shape = RoundedCornerShape(6.dp)
+                            )
                             .padding(top = 8.dp, bottom = 8.dp, start = 32.dp, end = 32.dp),
                     ) {
                         Text(
