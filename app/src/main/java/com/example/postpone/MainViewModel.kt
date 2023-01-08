@@ -68,6 +68,11 @@ class MainViewModel @Inject constructor(
             todo.isDone = isDone
             todoRepository.updateTodo(todo)
         }
+    }
 
+    fun onDeleteTodo(todo: Todo){
+        viewModelScope.launch {
+            todoRepository.deleteTodo(todo)
+        }
     }
 }

@@ -41,7 +41,8 @@ fun HomeScreen(
     onAddTodo: (Todo) -> Unit,
     onNoteClicked: (Note) -> Unit,
     onNoteDeleteClicked: (Note) -> Unit,
-    onUpdateTodoClicked: (Todo, Boolean) -> Unit
+    onUpdateTodoClicked: (Todo, Boolean) -> Unit,
+    onDeleteTodo: (Todo) -> Unit
 ) {
     val tabs = listOf(TabItem.Note, TabItem.Todo)
     val pagerState = rememberPagerState()
@@ -77,7 +78,8 @@ fun HomeScreen(
                 todos = todos,
                 onNoteClicked = onNoteClicked,
                 onNoteDeleteClicked = onNoteDeleteClicked,
-                onUpdateTodoClicked = onUpdateTodoClicked
+                onUpdateTodoClicked = onUpdateTodoClicked,
+                onDeleteTodo = onDeleteTodo
             )
         }
     }
@@ -129,12 +131,13 @@ fun TabsContent(
     todos: List<Todo>,
     onNoteClicked: (Note) -> Unit,
     onNoteDeleteClicked: (Note) -> Unit,
-    onUpdateTodoClicked: (Todo, Boolean) -> Unit
+    onUpdateTodoClicked: (Todo, Boolean) -> Unit,
+    onDeleteTodo: (Todo) -> Unit
 ) {
     HorizontalPager(
         state = pagerState,
         count = tabs.size,
-        userScrollEnabled = false,
+        userScrollEnabled = true,
         verticalAlignment = Alignment.Top,
         modifier = Modifier.background(MaterialTheme.colors.background)
     ) { page ->
@@ -147,7 +150,7 @@ fun TabsContent(
                 )
             }
             1 -> {
-                TodoScreen(todos = todos, onUpdateTodo = onUpdateTodoClicked)
+                TodoScreen(todos = todos, onUpdateTodo = onUpdateTodoClicked, onDeleteTodo = onDeleteTodo)
             }
         }
     }

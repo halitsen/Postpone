@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.postpone.MainViewModel
 import com.example.postpone.model.Note
+import com.example.postpone.model.Todo
 
 @Composable
 fun HomeRoute(
@@ -20,6 +21,7 @@ fun HomeRoute(
         onAddTodo = { viewModel.addTodo(it) },
         onNoteClicked = { onNoteClicked.invoke(it) },
         onNoteDeleteClicked = { viewModel.deleteNote(it) },
-        onUpdateTodoClicked = { note, isDone -> viewModel.onUpdateTodo(note, isDone) }
+        onUpdateTodoClicked = { note, isDone -> viewModel.onUpdateTodo(note, isDone) },
+        onDeleteTodo = {viewModel.onDeleteTodo(it)}
     )
 }
