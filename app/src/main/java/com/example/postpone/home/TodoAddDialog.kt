@@ -30,11 +30,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.postpone.R
 import com.example.postpone.model.Todo
 
 @Composable
@@ -62,9 +64,9 @@ fun TodoAddDialog(onCancel: () -> Unit, onConfirm: (Todo) -> Unit) {
                         alignment = Alignment.Start
                     )
                 ) {
-                    Icon(Icons.Outlined.Check, "", tint = MaterialTheme.colors.secondary)
+                    Icon(painterResource(id = R.drawable.ic_check), "", tint = MaterialTheme.colors.secondary)
                     Text(
-                        text = "Have a new task to do?",
+                        text = "New task to do",
                         style = TextStyle(
                             color = MaterialTheme.colors.secondary,
                             fontFamily = FontFamily.SansSerif,

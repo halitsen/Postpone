@@ -1,13 +1,14 @@
 package com.example.postpone.detail
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -19,14 +20,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.postpone.model.Note
 import com.example.postpone.ui.theme.PostponeTheme
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun NoteDetailScreen(
     note: Note?,
@@ -34,7 +38,6 @@ fun NoteDetailScreen(
     noteDescription: String?,
     onSaveNote: (Note) -> Unit,
     onDeleteNoteClicked: (Note?) -> Unit,
-    onUpdateNote: (Note) -> Unit,
     onBackPressed: () -> Unit
 ) {
     PostponeTheme {
@@ -44,7 +47,7 @@ fun NoteDetailScreen(
                 .fillMaxWidth()
                 .fillMaxHeight()
         ) {
-            var text by rememberSaveable { mutableStateOf(noteDescription?.trim()?:"") }
+            var text by rememberSaveable { mutableStateOf(noteDescription?.trim() ?: "") }
             val openDialog = remember { mutableStateOf(false) }
             if (openDialog.value) {
                 DeleteNoteAlertDialog(onCancel = { openDialog.value = false }, onConfirm = {
@@ -67,7 +70,7 @@ fun NoteDetailScreen(
                         Icon(Icons.Filled.Check, "")
                     }
                 }
-            ) { padding ->
+            ) { _ ->
                 Column(modifier = Modifier.padding(2.dp)) {
                     Text(
                         text = date,
