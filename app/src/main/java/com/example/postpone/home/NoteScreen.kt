@@ -1,5 +1,6 @@
 package com.example.postpone.home
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -28,19 +29,28 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.postpone.TabItem
 import com.example.postpone.detail.DeleteNoteAlertDialog
 import com.example.postpone.model.Note
 import com.example.postpone.utils.getDateFromTimeStamp
 
 @Composable
-fun NoteScreen(notes: List<Note>, onNoteClicked: (Note) -> Unit, onNoteDeleteClicked: (Note) -> Unit) {
+fun NoteScreen(
+    notes: List<Note>,
+    onNoteClicked: (Note) -> Unit,
+    onNoteDeleteClicked: (Note) -> Unit
+) {
     LazyColumn(
         modifier = Modifier
             .background(color = MaterialTheme.colors.background)
-            .padding(top = 6.dp)
+            .padding(top = 6.dp).animateContentSize()
     ) {
         items(notes) { item ->
-            NoteRow(note = item, onNoteClicked = onNoteClicked, onDeleteNoteClicked = onNoteDeleteClicked)
+            NoteRow(
+                note = item,
+                onNoteClicked = onNoteClicked,
+                onDeleteNoteClicked = onNoteDeleteClicked
+            )
         }
     }
 }
@@ -63,7 +73,7 @@ fun NoteRow(
     ) {
         val openDialog = remember { mutableStateOf(false) }
         if (openDialog.value) {
-            DeleteNoteAlertDialog(onCancel = { openDialog.value = false }, onConfirm = {
+            DeleteNoteAlertDialog(item = TabItem.Note, onCancel = { openDialog.value = false }, onConfirm = {
                 openDialog.value = false
                 onDeleteNoteClicked(note)
             })

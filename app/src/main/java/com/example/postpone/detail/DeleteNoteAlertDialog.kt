@@ -29,10 +29,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.postpone.TabItem
 
 @Preview
 @Composable
 fun DeleteNoteAlertDialog(
+    item: TabItem = TabItem.Note,
     onCancel: () -> Unit = {},
     onConfirm: () -> Unit = {}
 ) {
@@ -61,7 +63,7 @@ fun DeleteNoteAlertDialog(
                     Icon(Icons.Filled.Delete, "", tint = MaterialTheme.colors.secondary)
 
                     Text(
-                        text = "Delete Note",
+                        text = "Delete ${item.title}",
                         style = TextStyle(
                             color = MaterialTheme.colors.secondary,
                             fontFamily = FontFamily.SansSerif,
@@ -73,7 +75,7 @@ fun DeleteNoteAlertDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 16.dp, bottom = 32.dp),
-                    text = "Are you sure you want to delete this note?",
+                    text = "Are you sure you want to delete this ${item.description}?",
                     style = TextStyle(
                         color = MaterialTheme.colors.secondary,
                         fontFamily = FontFamily.SansSerif,
@@ -118,7 +120,11 @@ fun DeleteNoteAlertDialog(
                         modifier = Modifier
                             .clickable {
                                 Toast
-                                    .makeText(context, "Note has been deleted.", Toast.LENGTH_SHORT)
+                                    .makeText(
+                                        context,
+                                        "${item.title} has been deleted.",
+                                        Toast.LENGTH_SHORT
+                                    )
                                     .show()
                                 onConfirm()
                             }
