@@ -19,8 +19,6 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Check
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -64,7 +62,11 @@ fun TodoAddDialog(onCancel: () -> Unit, onConfirm: (Todo) -> Unit) {
                         alignment = Alignment.Start
                     )
                 ) {
-                    Icon(painterResource(id = R.drawable.ic_check), "", tint = MaterialTheme.colors.secondary)
+                    Icon(
+                        painterResource(id = R.drawable.ic_check),
+                        "",
+                        tint = MaterialTheme.colors.secondary
+                    )
                     Text(
                         text = "New task to do",
                         style = TextStyle(
@@ -97,7 +99,10 @@ fun TodoAddDialog(onCancel: () -> Unit, onConfirm: (Todo) -> Unit) {
                         disabledIndicatorColor = Color.Transparent
                     ),
                     placeholder = {
-                        Text("Write your new task here...", color = MaterialTheme.colors.secondary.copy(0.5f))
+                        Text(
+                            "Write your new task here...",
+                            color = MaterialTheme.colors.secondary.copy(0.5f)
+                        )
                     }
                 )
                 Row(
@@ -133,14 +138,14 @@ fun TodoAddDialog(onCancel: () -> Unit, onConfirm: (Todo) -> Unit) {
                     Box(
                         modifier = Modifier
                             .clickable {
-                                Toast
-                                    .makeText(
-                                        context,
-                                        "Congrats!! You have a new task to do.",
-                                        Toast.LENGTH_LONG
-                                    )
-                                    .show()
                                 if (text.isNotEmpty() && text != "") {
+                                    Toast
+                                        .makeText(
+                                            context,
+                                            "Congrats!! You have a new task to postpone",
+                                            Toast.LENGTH_LONG
+                                        )
+                                        .show()
                                     onConfirm(Todo(description = text))
                                 } else {
                                     onCancel()
@@ -148,6 +153,11 @@ fun TodoAddDialog(onCancel: () -> Unit, onConfirm: (Todo) -> Unit) {
                             }
                             .background(
                                 color = MaterialTheme.colors.primary,
+                                shape = RoundedCornerShape(6.dp)
+                            )
+                            .border(
+                                width = 1.dp,
+                                color = Color.White,
                                 shape = RoundedCornerShape(6.dp)
                             )
                             .padding(top = 8.dp, bottom = 8.dp, start = 32.dp, end = 32.dp),

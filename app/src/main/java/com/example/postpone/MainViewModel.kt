@@ -62,4 +62,12 @@ class MainViewModel @Inject constructor(
             noteRepository.deleteNote(note)
         }
     }
+
+    fun onUpdateTodo(todo: Todo, isDone: Boolean){
+        viewModelScope.launch {
+            todo.isDone = isDone
+            todoRepository.updateTodo(todo)
+        }
+
+    }
 }
