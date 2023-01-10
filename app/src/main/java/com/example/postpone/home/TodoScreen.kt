@@ -20,7 +20,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -36,51 +35,64 @@ fun TodoScreen(
     onUpdateTodo: (Todo, Boolean) -> Unit,
     onDeleteTodo: (Todo) -> Unit
 ) {
-    Surface {
-        val openDialog = remember { mutableStateOf(false) }
-        val todo = remember { mutableStateOf(Todo()) }
-        if (openDialog.value) {
-            DeleteNoteAlertDialog(item = TabItem.Todo, onCancel = { openDialog.value = false }, onConfirm = {
-                openDialog.value = false
-                onDeleteTodo(todo.value)
-            })
-        }
-
-        LazyColumn(modifier = Modifier.background(color = Color.White)) {
-            itemsIndexed(items = todos, key = { _, item ->
-                item.id
-            }) { _, item ->
-                val state = rememberDismissState(
-                    confirmStateChange = {
-                        if (it == DismissValue.DismissedToStart) {
-                            openDialog.value = true
-                            todo.value = item
-                        }
-                        false
-                    },
-
-                )
-                SwipeToDismiss(state = state, background = {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth().fillMaxHeight()
-                            .background(color = MaterialTheme.colors.secondary).padding(end = 12.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Delete,
-                            "delete",
-                            tint = MaterialTheme.colors.onError,
-                            modifier = Modifier.align(
-                                Alignment.CenterEnd
-                            )
-                        )
-                    }
-                }, dismissContent = {
-                    TodoRow(todo = item, onUpdateTodo = { todo, isDone ->
-                        onUpdateTodo(todo, isDone)
+    if (todos.isEmpty()) {
+        EmptyStateView(TabItem.Todo)
+    } else {
+        Surface {
+            val openDialog = remember { mutableStateOf(false) }
+            val todo = remember { mutableStateOf(Todo()) }
+            if (openDialog.value) {
+                DeleteNoteAlertDialog(
+                    item = TabItem.Todo,
+                    onCancel = { openDialog.value = false },
+                    onConfirm = {
+                        openDialog.value = false
+                        onDeleteTodo(todo.value)
                     })
-                }, directions = setOf(DismissDirection.EndToStart),
-                )
+            }
+
+            LazyColumn(modifier = Modifier.background(color = Color.White)) {
+                itemsIndexed(items = todos, key = { _, item ->
+                    item.id
+                }) { _, item ->
+                    val state = rememberDismissState(
+                        confirmStateChange = {
+                            if (it == DismissValue.DismissedToStart) {
+                                openDialog.value = true
+                                todo.value = item
+                            }
+                            false
+                        },
+
+                        )
+                    SwipeToDismiss(
+                        state = state,
+                        background = {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .fillMaxHeight()
+                                    .background(color = MaterialTheme.colors.secondary)
+                                    .padding(end = 12.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Delete,
+                                    "delete",
+                                    tint = MaterialTheme.colors.onError,
+                                    modifier = Modifier.align(
+                                        Alignment.CenterEnd
+                                    )
+                                )
+                            }
+                        },
+                        dismissContent = {
+                            TodoRow(todo = item, onUpdateTodo = { todo, isDone ->
+                                onUpdateTodo(todo, isDone)
+                            })
+                        },
+                        directions = setOf(DismissDirection.EndToStart),
+                    )
+                }
             }
         }
     }
