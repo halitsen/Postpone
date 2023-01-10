@@ -137,7 +137,7 @@ fun TabsContent(
     HorizontalPager(
         state = pagerState,
         count = tabs.size,
-        userScrollEnabled = true,
+        userScrollEnabled = false,
         verticalAlignment = Alignment.Top,
         modifier = Modifier.background(MaterialTheme.colors.background)
     ) { page ->

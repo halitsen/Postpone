@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -40,17 +41,22 @@ fun NoteScreen(
     onNoteClicked: (Note) -> Unit,
     onNoteDeleteClicked: (Note) -> Unit
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .background(color = MaterialTheme.colors.background)
-            .padding(top = 6.dp).animateContentSize()
-    ) {
-        items(notes) { item ->
-            NoteRow(
-                note = item,
-                onNoteClicked = onNoteClicked,
-                onDeleteNoteClicked = onNoteDeleteClicked
-            )
+    if (notes.isEmpty()) {
+        EmptyStateView(tabItem = TabItem.Note)
+    } else {
+        LazyColumn(
+            modifier = Modifier
+                .background(color = MaterialTheme.colors.background)
+                .padding(top = 6.dp)
+                .animateContentSize()
+        ) {
+            items(notes) { item ->
+                NoteRow(
+                    note = item,
+                    onNoteClicked = onNoteClicked,
+                    onDeleteNoteClicked = onNoteDeleteClicked
+                )
+            }
         }
     }
 }
@@ -73,10 +79,13 @@ fun NoteRow(
     ) {
         val openDialog = remember { mutableStateOf(false) }
         if (openDialog.value) {
-            DeleteNoteAlertDialog(item = TabItem.Note, onCancel = { openDialog.value = false }, onConfirm = {
-                openDialog.value = false
-                onDeleteNoteClicked(note)
-            })
+            DeleteNoteAlertDialog(
+                item = TabItem.Note,
+                onCancel = { openDialog.value = false },
+                onConfirm = {
+                    openDialog.value = false
+                    onDeleteNoteClicked(note)
+                })
         }
 
         Column(
