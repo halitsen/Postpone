@@ -34,9 +34,7 @@ class MainViewModel @Inject constructor(
     private fun getAllTodos(){
         viewModelScope.launch{
             todoRepository.getAllTodos().distinctUntilChanged().collect {
-                if (it.isEmpty().not()) {
                     _todoList.value = it
-                }
             }
         }
     }
@@ -44,9 +42,7 @@ class MainViewModel @Inject constructor(
     private fun getAllNotes() {
         viewModelScope.launch{
             noteRepository.getAllNotes().distinctUntilChanged().collect {
-                if (it.isEmpty().not()) {
                     _noteList.value = it
-                }
             }
         }
     }
