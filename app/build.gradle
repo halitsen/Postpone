@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace 'halit.sen.postpone'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "halit.sen.postpone"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -28,6 +28,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        benchmark {
+            signingConfig signingConfigs.debug
+            matchingFallbacks = ['release']
+            debuggable false
         }
     }
     compileOptions {
@@ -88,4 +93,7 @@ dependencies {
 
     implementation "com.google.accompanist:accompanist-pager:0.25.0"
     implementation "com.google.accompanist:accompanist-pager-indicators:0.25.0"
+
+    //benchmark
+    implementation "androidx.profileinstaller:profileinstaller:1.3.0-alpha01"
 }

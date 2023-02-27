@@ -25,6 +25,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -47,7 +48,7 @@ fun NoteScreen(
             modifier = Modifier
                 .background(color = MaterialTheme.colors.background)
                 .padding(top = 6.dp)
-                .animateContentSize()
+                .animateContentSize().testTag("note_list")
         ) {
             items(notes){item ->
                 NoteRow(
