@@ -1,17 +1,11 @@
 package halit.sen.postpone.home
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.LeadingIconTab
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.TabRow
-import androidx.compose.material.TabRowDefaults
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
@@ -21,6 +15,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -28,6 +23,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
+import halit.sen.postpone.R
 import halit.sen.postpone.TabItem
 import halit.sen.postpone.model.Note
 import halit.sen.postpone.model.Todo
@@ -87,10 +83,22 @@ fun HomeScreen(
 
 @Composable
 fun TopBar() {
+    val context = LocalContext.current
     TopAppBar(
         title = { Text(text = "Postpone", fontSize = 18.sp) },
         backgroundColor = MaterialTheme.colors.primary,
-        contentColor = Color.White
+        contentColor = Color.White,
+        actions = {
+            IconButton(onClick = {
+                redirectToShareIntent(context)
+            }) {
+                Icon(
+                    painterResource(id = R.drawable.ic_share),
+                    "",
+                    tint = Color.White
+                )
+            }
+        }
     )
 }
 
@@ -150,8 +158,27 @@ fun TabsContent(
                 )
             }
             1 -> {
-                TodoScreen(todos = todos, onUpdateTodo = onUpdateTodoClicked, onDeleteTodo = onDeleteTodo)
+                TodoScreen(
+                    todos = todos,
+                    onUpdateTodo = onUpdateTodoClicked,
+                    onDeleteTodo = onDeleteTodo
+                )
             }
         }
     }
+}
+
+private fun redirectToShareIntent(context: Context) {
+    val intent = Intent()
+    intent.action = Intent.ACTION_SEND
+    intent.putExtra(
+        Intent.EXTRA_TEXT,
+        "Hey!!! Check out this cool app here: https://play.google.com/store/apps/details?id=halit.sen.postpone"
+    )
+    intent.type = "text/plain"
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    val chooserIntent = Intent.createChooser(intent, "Share")
+    chooserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    context.startActivity(chooserIntent)
+
 }

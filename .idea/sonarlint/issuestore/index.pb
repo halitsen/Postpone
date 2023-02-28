@@ -34,8 +34,6 @@ f
 f
 6app/src/main/java/halit/sen/postpone/home/HomeRoute.kt,8/3/8308d38cb1ea2c114feeee378e75d06dc107017c
 g
-7app/src/main/java/halit/sen/postpone/home/HomeScreen.kt,6/3/63f5454c8445c97f9b69304d5267df2d64c00315
-g
 7app/src/main/java/halit/sen/postpone/home/TodoScreen.kt,2/f/2f45f06e0dcbc159737e513c5f29a6789291fe05
 r
 Bapp/src/main/java/halit/sen/postpone/navigation/PostponeNavHost.kt,2/0/205060c08bdd0e0e8f9bc6fa63f54f82e2dc89b4
