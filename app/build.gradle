@@ -96,4 +96,6 @@ dependencies {
 
     //benchmark
     implementation "androidx.profileinstaller:profileinstaller:1.3.0-alpha01"
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'
 }
