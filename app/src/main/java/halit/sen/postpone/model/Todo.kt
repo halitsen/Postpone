@@ -9,7 +9,7 @@ data class Todo constructor(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L,
     @ColumnInfo(name = "description")
-    val description: String="",
+    var description: String="",
     @ColumnInfo(name = "is_done")
     var isDone: Boolean = false
 )
