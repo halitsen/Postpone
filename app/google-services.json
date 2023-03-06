@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "342904064807",
+    "project_id": "postpone-c1e76",
+    "storage_bucket": "postpone-c1e76.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342904064807:android:bfc655b3a531b1b2e73702",
+        "android_client_info": {
+          "package_name": "halit.sen.postpone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "342904064807-ob7jv425g6c588jrkj2kkrp7nqll70hs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZEqzGuFyL_thNoLalNwVdhZrGW63ZP3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "342904064807-ob7jv425g6c588jrkj2kkrp7nqll70hs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
