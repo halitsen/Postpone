@@ -53,11 +53,8 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
-    lintOptions {
+    lint {
         abortOnError false
-        absolutePaths false
-        lintConfig file('lint.xml')
-        baseline file('lint-baseline.xml')
     }
 }
 
