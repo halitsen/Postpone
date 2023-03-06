@@ -30,6 +30,7 @@ android {
                 appId="halit.sen.postpone"
                 groups="QA"
                 artifactType = "APK"
+                artifactPath = "app/build/outputs/apk/debug/app-debug.apk"
             }
         }
         release {
