@@ -27,6 +27,7 @@ android {
     buildTypes {
         debug{
             firebaseAppDistribution {
+                appId="halit.sen.postpone"
                 groups="QA"
             }
         }
