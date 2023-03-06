@@ -27,7 +27,7 @@ android {
     buildTypes {
         debug{
             firebaseAppDistribution {
-                appId="halit.sen.postpone"
+                appId="1:342904064807:android:bfc655b3a531b1b2e73702"
                 groups="QA"
                 artifactType = "APK"
                 artifactPath = "app/build/outputs/apk/debug/app-debug.apk"
