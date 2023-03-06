@@ -29,6 +29,7 @@ android {
             firebaseAppDistribution {
                 appId="halit.sen.postpone"
                 groups="QA"
+                artifactType = "APK"
             }
         }
         release {
