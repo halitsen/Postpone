@@ -58,18 +58,12 @@ fun HomeScreen(
         topBar = { TopBar() },
         floatingActionButton = {
             FloatingActionButton(onClick = {
-
-                Toast.makeText(context,"${BuildConfig.API_ENDPOINT}", Toast.LENGTH_LONG).show()
-                /*
-
                 val note = Note(noteTitle = " ", description = " ")
                 if (pagerState.currentPage == 0) {
                     onNoteClicked.invoke(note)
                 } else {
                     openDialog.value = true
                 }
-
-                 */
             }
             ) {
                 Icon(Icons.Filled.Add, "")
