@@ -43,6 +43,28 @@ android {
             debuggable false
         }
     }
+
+    flavorDimensions "default"
+    productFlavors {
+        dev {
+            applicationId "halit.sen.postpone"
+            applicationIdSuffix ".dev"
+            versionNameSuffix = '-dev'
+            buildConfigField 'String', 'API_ENDPOINT', '"DEV env"'
+        }
+        uat {
+            applicationId "halit.sen.postpone"
+            applicationIdSuffix ".dev"
+            versionNameSuffix = '-dev'
+            buildConfigField 'String', 'API_ENDPOINT', '"UAT env"'
+        }
+
+        prod {
+            applicationId "halit.sen.postpone"
+            buildConfigField 'String', 'API_ENDPOINT', '"PROD env"'
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
