@@ -2,6 +2,8 @@ package halit.sen.postpone.home
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -23,6 +25,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
+import halit.sen.postpone.BuildConfig
 import halit.sen.postpone.R
 import halit.sen.postpone.TabItem
 import halit.sen.postpone.model.Note
@@ -43,6 +46,7 @@ fun HomeScreen(
     val tabs = listOf(TabItem.Note, TabItem.Todo)
     val pagerState = rememberPagerState()
     val openDialog = remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     if (openDialog.value) {
         TodoAddDialog(onCancel = { openDialog.value = false }, onConfirm = {
@@ -54,13 +58,20 @@ fun HomeScreen(
         topBar = { TopBar() },
         floatingActionButton = {
             FloatingActionButton(onClick = {
+
+                Toast.makeText(context,"${BuildConfig.API_ENDPOINT}", Toast.LENGTH_LONG).show()
+                /*
+
                 val note = Note(noteTitle = " ", description = " ")
                 if (pagerState.currentPage == 0) {
                     onNoteClicked.invoke(note)
                 } else {
                     openDialog.value = true
                 }
-            }) {
+
+                 */
+            }
+            ) {
                 Icon(Icons.Filled.Add, "")
             }
         }
