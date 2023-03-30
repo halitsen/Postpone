@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Postpone</string>
+    <string name="empty_todo">You do not have any task yet.\nPlease use (+) button below to add one.</string>
+    <string name="empty_note">You do not have any note yet.\nPlease use (+) button below to add one.</string>
+</resources>

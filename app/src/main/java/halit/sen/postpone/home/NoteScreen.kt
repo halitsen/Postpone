@@ -31,31 +31,39 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import halit.sen.postpone.TabItem
+import halit.sen.postpone.common.ScreenState
 import halit.sen.postpone.detail.DeleteNoteAlertDialog
 import halit.sen.postpone.model.Note
 import halit.sen.postpone.utils.getDateFromTimeStamp
 
 @Composable
 fun NoteScreen(
-    notes: List<Note>,
+    noteScreenState: ScreenState<List<Note>>,
     onNoteClicked: (Note) -> Unit,
     onNoteDeleteClicked: (Note) -> Unit
 ) {
-    if (notes.isEmpty()) {
-        EmptyStateView(tabItem = TabItem.Note)
-    } else {
-        LazyColumn(
-            modifier = Modifier
-                .background(color = MaterialTheme.colors.background)
-                .padding(top = 6.dp)
-                .animateContentSize().testTag("note_list")
-        ) {
-            items(notes){item ->
-                NoteRow(
-                    note = item,
-                    onNoteClicked = onNoteClicked,
-                    onDeleteNoteClicked = onNoteDeleteClicked
-                )
+    when (noteScreenState) {
+        is ScreenState.Loading -> {
+
+        }
+        is ScreenState.Error -> {
+            EmptyStateView(noteScreenState.message)
+        }
+        is ScreenState.Success -> {
+            LazyColumn(
+                modifier = Modifier
+                    .background(color = MaterialTheme.colors.background)
+                    .padding(top = 6.dp)
+                    .animateContentSize()
+                    .testTag("note_list")
+            ) {
+                items(noteScreenState.uiData) { item ->
+                    NoteRow(
+                        note = item,
+                        onNoteClicked = onNoteClicked,
+                        onDeleteNoteClicked = onNoteDeleteClicked
+                    )
+                }
             }
         }
     }
@@ -87,7 +95,6 @@ fun NoteRow(
                     onDeleteNoteClicked(note)
                 })
         }
-
         Column(
             modifier = Modifier
                 .background(MaterialTheme.colors.background)

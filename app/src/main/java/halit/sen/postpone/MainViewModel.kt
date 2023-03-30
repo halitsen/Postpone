@@ -3,13 +3,13 @@ package halit.sen.postpone
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import halit.sen.postpone.common.R as coreRes
+import halit.sen.postpone.common.ScreenState
 import halit.sen.postpone.model.Note
 import halit.sen.postpone.model.Todo
 import halit.sen.postpone.repository.NoteRepository
 import halit.sen.postpone.repository.TodoRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,11 +19,13 @@ class MainViewModel @Inject constructor(
     private val todoRepository: TodoRepository
 ) : ViewModel() {
 
-    private val _noteList = MutableStateFlow<List<Note>>(emptyList())
-    val noteList = _noteList.asStateFlow()
+    private val _noteScreenState =
+        MutableStateFlow<ScreenState<List<Note>>>(value = ScreenState.Loading)
+    val noteScreenState: StateFlow<ScreenState<List<Note>>> get() = _noteScreenState.asStateFlow()
 
-    private val _todoList = MutableStateFlow<List<Todo>>(emptyList())
-    val todoList = _todoList.asStateFlow()
+    private val _todoScreenState =
+        MutableStateFlow<ScreenState<List<Todo>>>(value = ScreenState.Loading)
+    val todoScreenState: StateFlow<ScreenState<List<Todo>>> get() = _todoScreenState.asStateFlow()
 
     init {
         getAllNotes()
@@ -32,16 +34,25 @@ class MainViewModel @Inject constructor(
 
     private fun getAllTodos(){
         viewModelScope.launch{
-            todoRepository.getAllTodos().distinctUntilChanged().collect {
-                    _todoList.value = it
+            todoRepository.getAllTodos().collectLatest { todoList ->
+                if(todoList.isNotEmpty()){
+                _todoScreenState.emit(ScreenState.Success(todoList))
+                }else{
+                    _todoScreenState.emit(ScreenState.Error(coreRes.string.empty_todo))
+                }
             }
         }
     }
 
     private fun getAllNotes() {
         viewModelScope.launch{
-            noteRepository.getAllNotes().distinctUntilChanged().collect {
-                    _noteList.value = it
+            noteRepository.getAllNotes().collectLatest { noteList ->
+                if(noteList.isNotEmpty()){
+                    _noteScreenState.emit(ScreenState.Success(noteList))
+                }else{
+                    _noteScreenState.emit(ScreenState.Error(coreRes.string.empty_note))
+                }
+
             }
         }
     }
