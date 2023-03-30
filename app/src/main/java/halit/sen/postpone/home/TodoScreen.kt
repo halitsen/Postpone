@@ -25,73 +25,81 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import halit.sen.postpone.TabItem
+import halit.sen.postpone.common.ScreenState
 import halit.sen.postpone.detail.DeleteNoteAlertDialog
 import halit.sen.postpone.model.Todo
+import javax.annotation.meta.When
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TodoScreen(
-    todos: List<Todo>,
+    todoScreenState: ScreenState<List<Todo>>,
     onUpdateTodo: (Todo, Boolean) -> Unit,
     onDeleteTodo: (Todo) -> Unit
 ) {
-    if (todos.isEmpty()) {
-        EmptyStateView(TabItem.Todo)
-    } else {
-        Surface {
-            val openDialog = remember { mutableStateOf(false) }
-            val todo = remember { mutableStateOf(Todo()) }
-            if (openDialog.value) {
-                DeleteNoteAlertDialog(
-                    item = TabItem.Todo,
-                    onCancel = { openDialog.value = false },
-                    onConfirm = {
-                        openDialog.value = false
-                        onDeleteTodo(todo.value)
-                    })
-            }
 
-            LazyColumn(modifier = Modifier.background(color = Color.White)) {
-                itemsIndexed(items = todos, key = { _, item ->
-                    item.id
-                }) { _, item ->
-                    val state = rememberDismissState(
-                        confirmStateChange = {
-                            if (it == DismissValue.DismissedToStart) {
-                                openDialog.value = true
-                                todo.value = item
-                            }
-                            false
-                        },
+    when (todoScreenState){
+        is  ScreenState.Loading -> {
 
-                        )
-                    SwipeToDismiss(
-                        state = state,
-                        background = {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .fillMaxHeight()
-                                    .background(color = MaterialTheme.colors.secondary)
-                                    .padding(end = 12.dp)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Outlined.Delete,
-                                    "delete",
-                                    tint = MaterialTheme.colors.onError,
-                                    modifier = Modifier.align(
-                                        Alignment.CenterEnd
+        }
+        is ScreenState.Error -> {
+            EmptyStateView(messageSrc = todoScreenState.message)
+        }
+        is ScreenState.Success -> {
+            Surface {
+                val openDialog = remember { mutableStateOf(false) }
+                val todo = remember { mutableStateOf(Todo()) }
+                if (openDialog.value) {
+                    DeleteNoteAlertDialog(
+                        item = TabItem.Todo,
+                        onCancel = { openDialog.value = false },
+                        onConfirm = {
+                            openDialog.value = false
+                            onDeleteTodo(todo.value)
+                        })
+                }
+                LazyColumn(modifier = Modifier.background(color = Color.White)) {
+                    itemsIndexed(items = todoScreenState.uiData, key = { _, item ->
+                        item.id
+                    }) { _, item ->
+                        val state = rememberDismissState(
+                            confirmStateChange = {
+                                if (it == DismissValue.DismissedToStart) {
+                                    openDialog.value = true
+                                    todo.value = item
+                                }
+                                false
+                            },
+
+                            )
+                        SwipeToDismiss(
+                            state = state,
+                            background = {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .fillMaxHeight()
+                                        .background(color = MaterialTheme.colors.secondary)
+                                        .padding(end = 12.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Delete,
+                                        "delete",
+                                        tint = MaterialTheme.colors.onError,
+                                        modifier = Modifier.align(
+                                            Alignment.CenterEnd
+                                        )
                                     )
-                                )
-                            }
-                        },
-                        dismissContent = {
-                            TodoRow(todo = item, onUpdateTodo = { todo, isDone ->
-                                onUpdateTodo(todo, isDone)
-                            })
-                        },
-                        directions = setOf(DismissDirection.EndToStart),
-                    )
+                                }
+                            },
+                            dismissContent = {
+                                TodoRow(todo = item, onUpdateTodo = { todo, isDone ->
+                                    onUpdateTodo(todo, isDone)
+                                })
+                            },
+                            directions = setOf(DismissDirection.EndToStart),
+                        )
+                    }
                 }
             }
         }

@@ -2,8 +2,10 @@ package halit.sen.postpone.home
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import halit.sen.postpone.MainViewModel
+import halit.sen.postpone.common.ScreenState
 import halit.sen.postpone.model.Note
 
 @Composable
@@ -11,12 +13,14 @@ fun HomeRoute(
     onNoteClicked: (Note) -> Unit,
     viewModel: MainViewModel = hiltViewModel()
 ) {
-    val notes = viewModel.noteList.collectAsState().value
-    val todos = viewModel.todoList.collectAsState().value
+
+    val todoScreenState by viewModel.todoScreenState.collectAsState(initial = ScreenState.Loading)
+    val noteScreenState by viewModel.noteScreenState.collectAsState(initial = ScreenState.Loading)
+
 
     HomeScreen(
-        notes = notes,
-        todos = todos,
+        noteScreenState = noteScreenState,
+        todoScreenState = todoScreenState,
         onAddTodo = { viewModel.addTodo(it) },
         onNoteClicked = { onNoteClicked.invoke(it) },
         onNoteDeleteClicked = { viewModel.deleteNote(it) },

@@ -28,6 +28,7 @@ import com.google.accompanist.pager.rememberPagerState
 import halit.sen.postpone.BuildConfig
 import halit.sen.postpone.R
 import halit.sen.postpone.TabItem
+import halit.sen.postpone.common.ScreenState
 import halit.sen.postpone.model.Note
 import halit.sen.postpone.model.Todo
 import kotlinx.coroutines.launch
@@ -35,8 +36,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun HomeScreen(
-    notes: List<Note>,
-    todos: List<Todo>,
+    noteScreenState: ScreenState<List<Note>>,
+    todoScreenState: ScreenState<List<Todo>>,
     onAddTodo: (Todo) -> Unit,
     onNoteClicked: (Note) -> Unit,
     onNoteDeleteClicked: (Note) -> Unit,
@@ -75,8 +76,8 @@ fun HomeScreen(
             TabsContent(
                 tabs = tabs,
                 pagerState = pagerState,
-                notes = notes,
-                todos = todos,
+                noteScreenState = noteScreenState,
+                todoScreenState = todoScreenState,
                 onNoteClicked = onNoteClicked,
                 onNoteDeleteClicked = onNoteDeleteClicked,
                 onUpdateTodoClicked = onUpdateTodoClicked,
@@ -140,8 +141,8 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
 fun TabsContent(
     tabs: List<TabItem>,
     pagerState: PagerState,
-    notes: List<Note>,
-    todos: List<Todo>,
+    noteScreenState: ScreenState<List<Note>>,
+    todoScreenState: ScreenState<List<Todo>>,
     onNoteClicked: (Note) -> Unit,
     onNoteDeleteClicked: (Note) -> Unit,
     onUpdateTodoClicked: (Todo, Boolean) -> Unit,
@@ -157,14 +158,14 @@ fun TabsContent(
         when (page) {
             0 -> {
                 NoteScreen(
-                    notes,
+                    noteScreenState = noteScreenState,
                     onNoteClicked = onNoteClicked,
                     onNoteDeleteClicked = onNoteDeleteClicked
                 )
             }
             1 -> {
                 TodoScreen(
-                    todos = todos,
+                    todoScreenState = todoScreenState,
                     onUpdateTodo = onUpdateTodoClicked,
                     onDeleteTodo = onDeleteTodo
                 )
