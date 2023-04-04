@@ -1,9 +1,9 @@
 package halit.sen.domain.usecase.note
 
-import halit.sen.data.dto.Note
+import halit.sen.domain.entity.NoteEntity
 import halit.sen.postpone.common.ResponseState
 import kotlinx.coroutines.flow.Flow
 
 interface UpdateNoteUseCase {
-    operator fun invoke(note: Note): Flow<ResponseState<Boolean>>
+    operator fun invoke(noteEntity: NoteEntity): Flow<ResponseState<Boolean>>
 }

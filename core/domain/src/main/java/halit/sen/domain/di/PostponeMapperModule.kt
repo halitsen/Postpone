@@ -2,6 +2,7 @@ package halit.sen.domain.di
 
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
@@ -27,4 +28,11 @@ abstract class PostponeMapperModule {
     @ViewModelScoped
     abstract fun bindTaskListEntityMapper(taskListEntityMapper: TaskListEntityMapper): PostponeListMapper<Task, TaskEntity>
 
+    @Binds
+    @ViewModelScoped
+    abstract fun bindNoteMapper(noteMapper: NoteMapper): PostponeBaseMapper<NoteEntity, Note>
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindTaskMapper(taskMapper: TaskMapper): PostponeBaseMapper<TaskEntity, Task>
 }

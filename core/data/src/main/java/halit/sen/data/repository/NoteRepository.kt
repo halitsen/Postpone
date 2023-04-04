@@ -2,6 +2,7 @@ package halit.sen.data.repository
 
 import halit.sen.data.dto.Note
 import halit.sen.postpone.common.ResponseState
+import kotlinx.coroutines.flow.Flow
 
 interface NoteRepository {
 
@@ -13,5 +14,5 @@ interface NoteRepository {
 
     suspend fun deleteNote(note: Note): ResponseState<Boolean>
 
-    suspend fun getAllNotes(): ResponseState<List<Note>>
+    suspend fun getAllNotes(): Flow<ResponseState<List<Note>>>
 }

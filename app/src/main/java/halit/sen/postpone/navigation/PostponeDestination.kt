@@ -15,7 +15,7 @@ object Home : PostponeDestination {
 object NoteDetail : PostponeDestination {
     override val route: String
         get() = "detail"
-    private const val idArg = "id"
+    private const val idArg: String = "id"
     private const val descriptionArg = "description"
     val routeWithArgs = "$route/{$idArg}/{$descriptionArg}"
     val arguments = listOf(

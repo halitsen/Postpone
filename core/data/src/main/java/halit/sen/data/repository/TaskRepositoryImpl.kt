@@ -6,6 +6,7 @@ import halit.sen.data.database.todo.TaskDatabaseDao
 import halit.sen.data.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -46,13 +47,14 @@ class TaskRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAllTasks(): ResponseState<List<Task>> {
-        return withContext(ioDispatcher) {
+    override suspend fun getAllTasks(): Flow<ResponseState<List<Task>>> = channelFlow {
+           withContext(ioDispatcher) {
             try {
-                val response = taskDatabaseDao.getAllTasks()
-                ResponseState.Success(response)
+                taskDatabaseDao.getAllTasks().conflate().collectLatest {
+                send(ResponseState.Success(it))
+                }
             } catch (e: Exception) {
-                ResponseState.Error(e)
+                send(ResponseState.Error(e))
             }
         }
     }

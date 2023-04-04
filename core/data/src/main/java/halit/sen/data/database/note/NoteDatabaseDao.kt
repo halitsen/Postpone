@@ -7,12 +7,13 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import halit.sen.data.dto.Note
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDatabaseDao {
 
     @Query("SELECT * from note_table")
-    fun getAllNotes(): List<Note>
+    fun getAllNotes(): Flow<List<Note>>
 
     @Query("SELECT * from note_table where id = :id")
     fun getNote(id: String): Note

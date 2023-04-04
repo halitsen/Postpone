@@ -7,12 +7,13 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import halit.sen.data.dto.Task
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDatabaseDao {
 
     @Query("SELECT * from task_table")
-    fun getAllTasks(): List<Task>
+    fun getAllTasks(): Flow<List<Task>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addTask(task: Task)

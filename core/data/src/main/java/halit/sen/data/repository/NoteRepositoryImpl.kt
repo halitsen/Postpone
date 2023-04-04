@@ -6,6 +6,7 @@ import halit.sen.data.dto.Note
 import halit.sen.postpone.common.ResponseState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -14,12 +15,12 @@ class NoteRepositoryImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : NoteRepository {
 
-    override suspend fun addNote(note: Note):ResponseState<Boolean> {
+    override suspend fun addNote(note: Note): ResponseState<Boolean> {
         return withContext(ioDispatcher) {
             try {
-            noteDatabaseDao.addNote(note)
+                noteDatabaseDao.addNote(note)
                 ResponseState.Success(true)
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 ResponseState.Error(e)
             }
         }
@@ -28,9 +29,9 @@ class NoteRepositoryImpl @Inject constructor(
     override suspend fun updateNote(note: Note): ResponseState<Boolean> {
         return withContext(ioDispatcher) {
             try {
-            noteDatabaseDao.updateNote(note)
+                noteDatabaseDao.updateNote(note)
                 ResponseState.Success(true)
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 ResponseState.Error(e)
             }
         }
@@ -39,9 +40,9 @@ class NoteRepositoryImpl @Inject constructor(
     override suspend fun deleteNote(note: Note): ResponseState<Boolean> {
         return withContext(ioDispatcher) {
             try {
-            noteDatabaseDao.deleteNote(note)
+                noteDatabaseDao.deleteNote(note)
                 ResponseState.Success(true)
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 ResponseState.Error(e)
             }
         }
@@ -58,13 +59,14 @@ class NoteRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAllNotes(): ResponseState<List<Note>> {
-        return withContext(ioDispatcher){
+    override suspend fun getAllNotes(): Flow<ResponseState<List<Note>>> = channelFlow {
+        withContext(ioDispatcher) {
             try {
-                val response = noteDatabaseDao.getAllNotes()
-                ResponseState.Success(response)
-            }catch (e: Exception){
-                ResponseState.Error(e)
+                noteDatabaseDao.getAllNotes().conflate().collectLatest {
+                send(ResponseState.Success(it))
+                }
+            } catch (e: Exception) {
+                send(ResponseState.Error(e))
             }
         }
     }
