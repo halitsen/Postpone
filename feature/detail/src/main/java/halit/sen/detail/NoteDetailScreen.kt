@@ -19,14 +19,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.ExperimentalComposeUiApi
+import halit.sen.postpone.common.R as coreRes
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import halit.sen.domain.entity.NoteEntity
-import halit.sen.postpone.common.DeleteNoteAlertDialog
+import halit.sen.postpone.common.component.DeleteNoteAlertDialog
 import halit.sen.postpone.common.TabItem
 import halit.sen.postpone.common.ui.theme.PostponeTheme
 
@@ -50,7 +50,7 @@ fun NoteDetailScreen(
             if (openDialog.value) {
                 DeleteNoteAlertDialog(
                     title = TabItem.Note.title,
-                    content = "Are you sure you want to delete this note?",
+                    contentRes = coreRes.string.delete_note_warning,
                     onCancel = { openDialog.value = false }, onConfirm = {
                         openDialog.value = false
                         onDeleteNoteClicked(note)

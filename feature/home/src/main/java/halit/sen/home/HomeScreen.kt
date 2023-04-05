@@ -26,6 +26,7 @@ import com.google.accompanist.pager.rememberPagerState
 import halit.sen.domain.entity.NoteEntity
 import halit.sen.domain.entity.TaskEntity
 import halit.sen.home.note.NoteScreen
+import halit.sen.home.task.TaskScreen
 import halit.sen.postpone.common.TabItem
 import halit.sen.postpone.common.ScreenState
 import halit.sen.postpone.common.R as coreRes
@@ -163,7 +164,7 @@ fun TabsContent(
                 )
             }
             1 -> {
-                TodoScreen(
+                TaskScreen(
                     todoScreenState = todoScreenState,
                     onUpdateTodo = onUpdateTodoClicked,
                     onDeleteTodo = onDeleteTodo

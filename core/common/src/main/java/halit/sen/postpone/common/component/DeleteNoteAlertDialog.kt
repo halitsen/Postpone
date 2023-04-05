@@ -1,4 +1,4 @@
-package halit.sen.postpone.common
+package halit.sen.postpone.common.component
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
@@ -33,7 +34,7 @@ import androidx.compose.ui.window.Dialog
 @Composable
 fun DeleteNoteAlertDialog(
     title: String,
-    content: String,
+    contentRes: Int,
     onCancel: () -> Unit = {},
     onConfirm: () -> Unit = {}
 ) {
@@ -74,7 +75,7 @@ fun DeleteNoteAlertDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 16.dp, bottom = 32.dp),
-                    text = content,
+                    text = stringResource(id = contentRes),
                     style = TextStyle(
                         color = MaterialTheme.colors.secondary,
                         fontFamily = FontFamily.SansSerif,
