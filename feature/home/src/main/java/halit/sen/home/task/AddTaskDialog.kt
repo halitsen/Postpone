@@ -1,4 +1,4 @@
-package halit.sen.home.ui
+package halit.sen.home.task
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -143,11 +143,10 @@ fun TodoAddDialog(onCancel: () -> Unit, onConfirm: (TaskEntity) -> Unit) {
                                         .makeText(
                                             context,
                                             "Congrats!! You have a new task to postpone",
-                                            Toast.LENGTH_LONG
+                                            Toast.LENGTH_SHORT
                                         )
                                         .show()
                                     onConfirm(TaskEntity(description = text, isDone = false,id = 0L))
-                                    //todo yeni item ekleyince mapper id vermesin, update edince versin.
                                 } else {
                                     onCancel()
                                 }
