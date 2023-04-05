@@ -1,4 +1,4 @@
-package halit.sen.domain.getAllNotes
+package halit.sen.domain.usecase.getAllNotes
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat

@@ -1,8 +1,8 @@
-package halit.sen.domain.getAllTask
+package halit.sen.domain.usecase.getAllTask
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import halit.sen.domain.getAllNotes.FakeGetAllNotesUseCase
+import halit.sen.domain.usecase.getAllNotes.FakeGetAllNotesUseCase
 import halit.sen.postpone.common.ResponseState
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
