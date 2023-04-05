@@ -26,7 +26,7 @@ fun PostponeNavHost(
         composable(route = Home.route) {
             val route = NoteDetail.route
             HomeRoute(onNoteClicked = {
-                val routeWithArgs = "${route}/${it.id}/${it.description}"
+                val routeWithArgs = "${route}/${it.id}"
                 navController.navigate(route = routeWithArgs)
             }, onFabClicked = {
                 navController.navigate(route = route)
