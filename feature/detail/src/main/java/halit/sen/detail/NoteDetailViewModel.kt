@@ -25,29 +25,30 @@ class NoteDetailViewModel @Inject constructor(
     private val deleteNoteUseCase: DeleteNoteUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-
-    private val _note = MutableStateFlow<NoteEntity?>(null)
-    val note = _note.asStateFlow()
-
     private val _noteDetailUiState =
         MutableStateFlow<ScreenState<NoteEntity>>(value = ScreenState.Loading)
     val noteDetailUiState: StateFlow<ScreenState<NoteEntity>> get() = _noteDetailUiState.asStateFlow()
 
-
-    val description = MutableStateFlow(savedStateHandle["description"] ?: "").asStateFlow()
-
-    private val _date = MutableStateFlow("")
-    val date = _date.asStateFlow()
+    private val id: String? = savedStateHandle.get<String>("id")
 
     init {
         getNote()
-        _date.value =
-            getDateFromTimeStamp(if (_note.value == null) System.currentTimeMillis() else _note.value!!.lastEdit.toLong())
     }
 
     private fun getNote() {
         viewModelScope.launch {
-            savedStateHandle.get<String>("id")?.let { id ->
+            if (id == null) {
+                _noteDetailUiState.emit(
+                    ScreenState.Success(
+                        NoteEntity(
+                            "0",
+                            "",
+                            "",
+                            getDateFromTimeStamp(System.currentTimeMillis())
+                        )
+                    )
+                )
+            } else {
                 getNoteUseCase(id).collectLatest { response ->
                     when (response) {
                         is ResponseState.Loading -> {
@@ -61,20 +62,24 @@ class NoteDetailViewModel @Inject constructor(
                         }
                     }
                 }
-            }.apply {
-                _noteDetailUiState.emit(ScreenState.Success(NoteEntity("0","","")))
             }
         }
     }
 
-    fun saveNote(note: NoteEntity) {
+    fun saveNote(note: String) {
         viewModelScope.launch {
-            if (description.value.trim() == "") {
-                if (note.description.trim().isEmpty().not() && note.description != "")
-                    addNoteUseCase(note).collect()
+            if ((_noteDetailUiState.value as ScreenState.Success).uiData.description == "") {
+                if (note.trim().isEmpty().not() && note != "")
+                    addNoteUseCase(NoteEntity(id = "", title = "", description = note)).collect()
             } else {
-                if (note.description.trim().isEmpty().not() && note.description != "")
-                    updateNoteUseCase(note).collect()
+                if (note.trim().isEmpty().not() && note != "")
+                    updateNoteUseCase(
+                        NoteEntity(
+                            id = savedStateHandle.get<String>("id") ?: "",
+                            title = "",
+                            description = note
+                        )
+                    ).collect()
             }
         }
     }

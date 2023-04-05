@@ -2,6 +2,7 @@ package halit.sen.domain.mapper
 
 import halit.sen.data.dto.Note
 import halit.sen.domain.entity.NoteEntity
+import halit.sen.postpone.common.getDateFromTimeStamp
 import javax.inject.Inject
 
 class NoteEntityMapper  @Inject constructor(): PostponeBaseMapper<Note, NoteEntity> {
@@ -10,7 +11,7 @@ class NoteEntityMapper  @Inject constructor(): PostponeBaseMapper<Note, NoteEnti
             id = input.id.toString(),
             title = input.noteTitle,
             description = input.description,
-            lastEdit = input.noteLastEdit.toString(),
+            lastEdit = getDateFromTimeStamp(input.noteLastEdit),
         )
     }
 }

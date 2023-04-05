@@ -31,13 +31,10 @@ import halit.sen.postpone.common.TabItem
 import halit.sen.postpone.common.ui.theme.PostponeTheme
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun NoteDetailScreen(
     note: NoteEntity,
-    date: String,
-    noteDescription: String?,
-    onSaveNote: (NoteEntity) -> Unit,
+    onSaveNote: (String) -> Unit,
     onDeleteNoteClicked: (NoteEntity?) -> Unit,
     onBackPressed: () -> Unit
 ) {
@@ -48,17 +45,17 @@ fun NoteDetailScreen(
                 .fillMaxWidth()
                 .fillMaxHeight()
         ) {
-            var text by rememberSaveable { mutableStateOf(noteDescription?.trim() ?: "") }
+            var text by rememberSaveable { mutableStateOf(note.description.trim()) }
             val openDialog = remember { mutableStateOf(false) }
             if (openDialog.value) {
                 DeleteNoteAlertDialog(
                     title = TabItem.Note.title,
                     content = "Are you sure you want to delete this note?",
                     onCancel = { openDialog.value = false }, onConfirm = {
-                    openDialog.value = false
-                    onDeleteNoteClicked(note)
-                    onBackPressed()
-                })
+                        openDialog.value = false
+                        onDeleteNoteClicked(note)
+                        onBackPressed()
+                    })
             }
             Scaffold(
                 topBar = {
@@ -68,7 +65,7 @@ fun NoteDetailScreen(
                 },
                 floatingActionButton = {
                     FloatingActionButton(onClick = {
-                        onSaveNote.invoke(NoteEntity(description = text, id = note.id, lastEdit = System.currentTimeMillis().toString()))//todo texti gönder sadece
+                        onSaveNote.invoke(text)
                         onBackPressed()
                     }) {
                         Icon(Icons.Filled.Check, "")
@@ -77,7 +74,7 @@ fun NoteDetailScreen(
             ) { _ ->
                 Column(modifier = Modifier.padding(2.dp)) {
                     Text(
-                        text = date,
+                        text = note.lastEdit,
                         modifier = Modifier.padding(start = 14.dp, top = 16.dp),
                         color = MaterialTheme.colors.secondary
                     )
