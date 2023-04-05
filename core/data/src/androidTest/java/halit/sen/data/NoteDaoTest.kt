@@ -17,7 +17,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-class NoteDaoTest {
+internal class NoteDaoTest {
 
     private lateinit var database: NoteDatabase
     private lateinit var noteDao: NoteDatabaseDao
