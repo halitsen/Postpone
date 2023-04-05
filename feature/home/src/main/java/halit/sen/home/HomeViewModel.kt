@@ -91,7 +91,7 @@ class HomeViewModel @Inject constructor(
 
     fun deleteNote(noteEntity: NoteEntity) {
         viewModelScope.launch {
-            deleteNoteUseCase(noteEntity)
+            deleteNoteUseCase(noteEntity).collect()
         }
 
     }

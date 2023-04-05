@@ -86,7 +86,7 @@ class NoteDetailViewModel @Inject constructor(
 
     fun onDeleteNoteClicked(note: NoteEntity) {
         viewModelScope.launch {
-            deleteNoteUseCase(note)
+            deleteNoteUseCase(note).collect()
         }
     }
 }
