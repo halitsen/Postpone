@@ -98,33 +98,20 @@ class HomeViewModel @Inject constructor(
 
     fun addTask(taskEntity: TaskEntity) {
         viewModelScope.launch {
-            addTaskUseCase(taskEntity).collectLatest {
-                when(it){
-                    is ResponseState.Success -> {
-                        Log.i("SUCCESSS",it.data.toString())
-                    }
-                    is ResponseState.Loading -> {
-                        Log.i("loading"," ")
-                    }
-                    is ResponseState.Error -> {
-                        Log.i("ERRORR", it.exception.message.toString())
-                    }
-                }
-            }
+            addTaskUseCase(taskEntity).collect()
         }
-
     }
 
     fun updateTask(taskEntity: TaskEntity, isDone: Boolean) {
         taskEntity.isDone = isDone
         viewModelScope.launch {
-            updateTaskUseCase(taskEntity)
+            updateTaskUseCase(taskEntity).collect()
         }
     }
 
     fun deleteTask(taskEntity: TaskEntity) {
         viewModelScope.launch {
-            deleteTaskUseCase(taskEntity)
+            deleteTaskUseCase(taskEntity).collect()
         }
     }
 }
