@@ -31,10 +31,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import halit.sen.domain.entity.NoteEntity
-import halit.sen.home.ui.EmptyStateView
+import halit.sen.postpone.common.component.MessageStateView
 import halit.sen.postpone.common.TabItem
 import halit.sen.postpone.common.DeleteNoteAlertDialog
 import halit.sen.postpone.common.ScreenState
+import halit.sen.postpone.common.component.LoadingStateView
 import halit.sen.postpone.common.getDateFromTimeStamp
 
 @Composable
@@ -45,10 +46,10 @@ fun NoteScreen(
 ) {
     when (noteScreenState) {
         is ScreenState.Loading -> {
-            //todo loading state
+            LoadingStateView()
         }
         is ScreenState.Error -> {
-            EmptyStateView(noteScreenState.message)
+            MessageStateView(noteScreenState.message)
         }
         is ScreenState.Success -> {
             LazyColumn(

@@ -4,13 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import halit.sen.domain.entity.NoteEntity
-import halit.sen.domain.entity.TaskEntity
 import halit.sen.domain.usecase.note.DeleteNoteUseCase
 import halit.sen.domain.usecase.note.GetAllNotesUseCase
-import halit.sen.domain.usecase.task.AddTaskUseCase
-import halit.sen.domain.usecase.task.DeleteTaskUseCase
-import halit.sen.domain.usecase.task.GetAllTasksUseCase
-import halit.sen.domain.usecase.task.UpdateTaskUseCase
 import halit.sen.postpone.common.ResponseState
 import halit.sen.postpone.common.ScreenState
 import kotlinx.coroutines.flow.*

@@ -1,4 +1,4 @@
-package halit.sen.home.ui
+package halit.sen.home.task
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -25,13 +25,15 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import halit.sen.domain.entity.TaskEntity
+import halit.sen.postpone.common.component.MessageStateView
 import halit.sen.postpone.common.TabItem
 import halit.sen.postpone.common.DeleteNoteAlertDialog
 import halit.sen.postpone.common.ScreenState
+import halit.sen.postpone.common.component.LoadingStateView
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun TodoScreen(
+fun TaskScreen(
     todoScreenState: ScreenState<List<TaskEntity>>,
     onUpdateTodo: (TaskEntity, Boolean) -> Unit,
     onDeleteTodo: (TaskEntity) -> Unit
@@ -39,10 +41,10 @@ fun TodoScreen(
 
     when (todoScreenState){
         is  ScreenState.Loading -> {
-
+            LoadingStateView()
         }
         is ScreenState.Error -> {
-            EmptyStateView(messageSrc = todoScreenState.message)
+            MessageStateView(messageSrc = todoScreenState.message)
         }
         is ScreenState.Success -> {
             Surface {
