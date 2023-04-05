@@ -27,9 +27,10 @@ import androidx.compose.ui.unit.sp
 import halit.sen.domain.entity.TaskEntity
 import halit.sen.postpone.common.component.MessageStateView
 import halit.sen.postpone.common.TabItem
-import halit.sen.postpone.common.DeleteNoteAlertDialog
+import halit.sen.postpone.common.component.DeleteNoteAlertDialog
 import halit.sen.postpone.common.ScreenState
 import halit.sen.postpone.common.component.LoadingStateView
+import halit.sen.postpone.common.R as coreRes
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -53,7 +54,7 @@ fun TaskScreen(
                 if (openDialog.value) {
                     DeleteNoteAlertDialog(
                         title = TabItem.Task.title,
-                        content = "Are you sure you want to delete this task?",
+                        contentRes = coreRes.string.delete_task_warning,
                         onCancel = { openDialog.value = false },
                         onConfirm = {
                             openDialog.value = false

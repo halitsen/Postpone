@@ -53,6 +53,5 @@ class NoteViewModel @Inject constructor(
         viewModelScope.launch {
             deleteNoteUseCase(noteEntity).collect()
         }
-
     }
 }

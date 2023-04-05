@@ -1,4 +1,4 @@
-package halit.sen.postpone.common
+package halit.sen.postpone.common.component
 
 import android.widget.Toast
 import androidx.compose.foundation.background

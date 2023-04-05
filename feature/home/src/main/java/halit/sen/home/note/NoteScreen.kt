@@ -33,10 +33,11 @@ import androidx.compose.ui.unit.sp
 import halit.sen.domain.entity.NoteEntity
 import halit.sen.postpone.common.component.MessageStateView
 import halit.sen.postpone.common.TabItem
-import halit.sen.postpone.common.DeleteNoteAlertDialog
+import halit.sen.postpone.common.component.DeleteNoteAlertDialog
 import halit.sen.postpone.common.ScreenState
 import halit.sen.postpone.common.component.LoadingStateView
 import halit.sen.postpone.common.getDateFromTimeStamp
+import halit.sen.postpone.common.R as coreRes
 
 @Composable
 fun NoteScreen(
@@ -91,7 +92,7 @@ fun NoteRow(
         if (openDialog.value) {
             DeleteNoteAlertDialog(
                 title = TabItem.Note.title,
-                content = "Are you sure you want to delete this note?",
+                contentRes = coreRes.string.delete_note_warning,
                 onCancel = { openDialog.value = false },
                 onConfirm = {
                     openDialog.value = false
