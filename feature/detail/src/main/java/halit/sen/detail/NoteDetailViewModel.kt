@@ -13,10 +13,7 @@ import halit.sen.domain.usecase.note.UpdateNoteUseCase
 import halit.sen.postpone.common.ResponseState
 import halit.sen.postpone.common.ScreenState
 import halit.sen.postpone.common.getDateFromTimeStamp
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -65,7 +62,7 @@ class NoteDetailViewModel @Inject constructor(
                     }
                 }
             }.apply {
-                _noteDetailUiState.emit(ScreenState.Success(NoteEntity("","","")))
+                _noteDetailUiState.emit(ScreenState.Success(NoteEntity("0","","")))
             }
         }
     }
@@ -74,10 +71,10 @@ class NoteDetailViewModel @Inject constructor(
         viewModelScope.launch {
             if (description.value.trim() == "") {
                 if (note.description.trim().isEmpty().not() && note.description != "")
-                    addNoteUseCase(note)
+                    addNoteUseCase(note).collect()
             } else {
                 if (note.description.trim().isEmpty().not() && note.description != "")
-                    updateNoteUseCase(note)
+                    updateNoteUseCase(note).collect()
             }
         }
     }

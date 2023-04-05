@@ -68,7 +68,7 @@ fun NoteDetailScreen(
                 },
                 floatingActionButton = {
                     FloatingActionButton(onClick = {
-                        onSaveNote.invoke(NoteEntity(description = text, id = ""))//todo texti gönder sadece
+                        onSaveNote.invoke(NoteEntity(description = text, id = note.id, lastEdit = System.currentTimeMillis().toString()))//todo texti gönder sadece
                         onBackPressed()
                     }) {
                         Icon(Icons.Filled.Check, "")
