@@ -17,7 +17,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-class TaskDaoTest {
+internal class TaskDaoTest {
 
     private lateinit var database: TaskDatabase
     private lateinit var todoDao: TaskDatabaseDao
