@@ -48,13 +48,14 @@ class NoteRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getNote(id: String): ResponseState<Note> {
-        return withContext(ioDispatcher) {
+    override suspend fun getNote(id: String): Flow<ResponseState<Note>> = channelFlow{
+         withContext(ioDispatcher) {
             try {
-                val response = noteDatabaseDao.getNote(id)
-                ResponseState.Success(response)
+                noteDatabaseDao.getNote(id).conflate().collectLatest {
+                    send(ResponseState.Success(it))
+                }
             } catch (e: Exception) {
-                ResponseState.Error(e)
+                send(ResponseState.Error(e))
             }
         }
     }

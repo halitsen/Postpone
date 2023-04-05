@@ -1,14 +1,14 @@
-package halit.sen.postpone
+package halit.sen.data
 
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import app.cash.turbine.test
-import halit.sen.postpone.data.note.NoteDatabase
-import halit.sen.postpone.data.note.NoteDatabaseDao
-import halit.sen.postpone.model.Note
-import kotlinx.coroutines.*
+import halit.sen.data.database.note.NoteDatabase
+import halit.sen.data.database.note.NoteDatabaseDao
+import halit.sen.data.dto.Note
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -42,7 +42,7 @@ class NoteDaoTest {
     fun insertNoteTest() = runTest {
         val note = Note(id = 1L, "Test", "This is test note..", System.currentTimeMillis())
         val note2 = Note(id = 2L, "Test2", "This is test note..", System.currentTimeMillis())
-        noteDao.insertNote(note)
+        noteDao.addNote(note)
 
         noteDao.getAllNotes().test {
             val list = awaitItem()
@@ -56,7 +56,7 @@ class NoteDaoTest {
     @Test
     fun getNoteTest() = runTest {
         val note = Note(id = 1L, "Test", "This is test note..", System.currentTimeMillis())
-        noteDao.insertNote(note)
+        noteDao.addNote(note)
 
         noteDao.getNote(note.id.toString()).test {
             val note2 = awaitItem()
@@ -69,7 +69,7 @@ class NoteDaoTest {
     @Test
     fun updateNoteTest() = runTest {
         val note = Note(id = 1L, "Test", "This is test note..", System.currentTimeMillis())
-        noteDao.insertNote(note)
+        noteDao.addNote(note)
 
         note.description = "updated description"
         noteDao.updateNote(note)
@@ -85,7 +85,7 @@ class NoteDaoTest {
     @Test
     fun deleteNoteTest() = runTest {
         val note = Note(id = 1L, "Test", "This is test note..", System.currentTimeMillis())
-        noteDao.insertNote(note)
+        noteDao.addNote(note)
         noteDao.deleteNote(note)
 
         noteDao.getAllNotes().test {
@@ -100,8 +100,8 @@ class NoteDaoTest {
     fun deleteAllNotesTest() = runTest {
         val note = Note(id = 1L, "Test", "This is test note..", System.currentTimeMillis())
         val note2 = Note(id = 2L, "Test2", "This is 2 test note..", System.currentTimeMillis())
-        noteDao.insertNote(note)
-        noteDao.insertNote(note2)
+        noteDao.addNote(note)
+        noteDao.addNote(note2)
 
         noteDao.deleteAllNotes()
 
@@ -110,6 +110,5 @@ class NoteDaoTest {
             assert(list.isEmpty())
             cancel()
         }
-
     }
 }

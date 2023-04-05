@@ -8,7 +8,7 @@ interface NoteRepository {
 
     suspend fun addNote(note: Note):ResponseState<Boolean>
 
-    suspend fun getNote(id: String): ResponseState<Note>
+    suspend fun getNote(id: String): Flow<ResponseState<Note>>
 
     suspend fun updateNote(note: Note): ResponseState<Boolean>
 
