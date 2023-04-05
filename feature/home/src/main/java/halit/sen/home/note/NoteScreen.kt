@@ -1,4 +1,4 @@
-package halit.sen.home.ui
+package halit.sen.home.note
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import halit.sen.domain.entity.NoteEntity
+import halit.sen.home.ui.EmptyStateView
 import halit.sen.postpone.common.TabItem
 import halit.sen.postpone.common.DeleteNoteAlertDialog
 import halit.sen.postpone.common.ScreenState
@@ -44,7 +45,7 @@ fun NoteScreen(
 ) {
     when (noteScreenState) {
         is ScreenState.Loading -> {
-
+            //todo loading state
         }
         is ScreenState.Error -> {
             EmptyStateView(noteScreenState.message)

@@ -25,6 +25,7 @@ import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import halit.sen.domain.entity.NoteEntity
 import halit.sen.domain.entity.TaskEntity
+import halit.sen.home.note.NoteScreen
 import halit.sen.postpone.common.TabItem
 import halit.sen.postpone.common.ScreenState
 import halit.sen.postpone.common.R as coreRes
@@ -97,7 +98,7 @@ fun TopBar() {
                 redirectToShareIntent(context)
             }) {
                 Icon(
-                    painterResource(id = coreRes.drawable.ic_check),
+                    painterResource(id = coreRes.drawable.ic_share),
                     "",
                     tint = Color.White
                 )

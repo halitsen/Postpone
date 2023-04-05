@@ -75,7 +75,7 @@ class NoteDetailViewModel @Inject constructor(
                 if (note.trim().isEmpty().not() && note != "")
                     updateNoteUseCase(
                         NoteEntity(
-                            id = savedStateHandle.get<String>("id") ?: "",
+                            id = id ?: "",
                             title = "",
                             description = note
                         )

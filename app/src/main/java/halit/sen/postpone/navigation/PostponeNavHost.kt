@@ -9,7 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import halit.sen.detail.NoteDetailRoute
-import halit.sen.home.ui.HomeRoute
+import halit.sen.home.HomeRoute
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
