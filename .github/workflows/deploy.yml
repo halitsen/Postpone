@@ -24,6 +24,6 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build and Deploy Debug
-        run: ./gradlew assembleDebug appDistributionUploadDebug
+        run: ./gradlew assembleDebug appDistributionUploadDevDebug
         env:
           FIREBASE_TOKEN: ${{secrets.FIREBASE_TOKEN}}
