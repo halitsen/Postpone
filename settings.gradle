@@ -16,3 +16,7 @@ rootProject.name = "Postpone"
 include ':app'
 include ':benchmark'
 include ':core:common'
+include ':core:data'
+include ':core:domain'
+include ':feature:home'
+include ':feature:detail'

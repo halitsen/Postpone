@@ -8,8 +8,8 @@ import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import halit.sen.postpone.detail.NoteDetailRoute
-import halit.sen.postpone.home.HomeRoute
+import halit.sen.detail.NoteDetailRoute
+import halit.sen.home.HomeRoute
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -17,19 +17,31 @@ fun PostponeNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    NavHost(navController = navController, startDestination = Home.route, modifier = modifier.semantics {
-        testTagsAsResourceId = true
-    }) {
+    NavHost(
+        navController = navController,
+        startDestination = Home.route,
+        modifier = modifier.semantics {
+            testTagsAsResourceId = true
+        }) {
         composable(route = Home.route) {
+            val route = NoteDetail.route
             HomeRoute(onNoteClicked = {
-                val route = "${NoteDetail.route}/${it.id}/${it.description}"
-                    navController.navigate(route = route)
+                val routeWithArgs = "${route}/${it.id}"
+                navController.navigate(route = routeWithArgs)
+            }, onFabClicked = {
+                navController.navigate(route = route)
             })
         }
-
         composable(
             route = NoteDetail.routeWithArgs,
             arguments = NoteDetail.arguments
+        ) {
+            NoteDetailRoute(onBackPressed = {
+                navController.navigateUp()
+            })
+        }
+        composable(
+            route = NoteDetail.route
         ) {
             NoteDetailRoute(onBackPressed = {
                 navController.navigateUp()
