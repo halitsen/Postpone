@@ -4,6 +4,7 @@ import androidx.annotation.VisibleForTesting
 import halit.sen.data.dto.Note
 import halit.sen.data.dto.Task
 import halit.sen.domain.entity.NoteEntity
+import halit.sen.domain.entity.TaskEntity
 
 @VisibleForTesting
 const val noteId = "1"
@@ -17,6 +18,14 @@ val noteEntity =
     )
 
 @VisibleForTesting
+val taskEntity =
+    TaskEntity(
+        id = 0L,
+        description = "task test title",
+        isDone = true
+    )
+
+@VisibleForTesting
 val note =
     Note(
         id = 0L,
@@ -24,6 +33,7 @@ val note =
         noteTitle = "test entity"
     )
 
+@VisibleForTesting
 val noteList = listOf<Note>(
     Note(
         id = 0L,
@@ -37,6 +47,7 @@ val noteList = listOf<Note>(
     )
 )
 
+@VisibleForTesting
 val taskList = listOf<Task>(
     Task(id = 0L, description = "test task",  isDone = false),
     Task(id = 1L, description = "test task2",  isDone = true),
