@@ -38,7 +38,7 @@ A useful note-keeping and task tracking app  for teaching how to use Jetpack Com
 
 ## Dependency graph
 <p align="center">
-<img src="/art/postpone_architecture" width="80%" height="500px"/>
+<img src="/art/postpone_architecture.jpg" width="80%" height="500px"/>
 </p>
 
 ## Architecture
