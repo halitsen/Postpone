@@ -72,4 +72,14 @@ dependencies {
 
     implementation "com.google.accompanist:accompanist-pager:0.25.0"
     implementation "com.google.accompanist:accompanist-pager-indicators:0.25.0"
+
+    // Truth
+    testImplementation "com.google.truth:truth:1.1.2"
+
+    // Mockito
+    testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
+    testImplementation "org.mockito:mockito-inline:3.0.0"
+
+    // Coroutines-Test
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.9"
 }
